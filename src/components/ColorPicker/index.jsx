@@ -1,6 +1,7 @@
 import { Box, IconButton, Popover } from "@material-ui/core"
 import useColorValue from "hooks/useColorValue"
-import { useState } from "react"
+import usePrevious from "hooks/usePrevious"
+import { useCallback, useState } from "react"
 import { ChromePicker } from "react-color"
 
 import useStyles from "./styles"
@@ -9,6 +10,7 @@ const ColorPicker = ({ value, onChange }) => {
   const classes = useStyles()
 
   const [innerValue, setInnerValue] = useState(value)
+  const previousInnerValue = usePrevious(innerValue)
 
   const [anchorEl, setAnchorEl] = useState(null)
 
@@ -16,10 +18,12 @@ const ColorPicker = ({ value, onChange }) => {
     setAnchorEl(e.currentTarget)
   }
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setAnchorEl(null)
-    onChange?.(innerValue)
-  }
+    if (previousInnerValue !== innerValue) {
+      onChange?.(innerValue)
+    }
+  }, [previousInnerValue, innerValue, onChange])
 
   const handleColorChange = (color) => {
     setInnerValue(color.rgb)
