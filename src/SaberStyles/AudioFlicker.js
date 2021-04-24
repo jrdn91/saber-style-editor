@@ -12,7 +12,7 @@ const styleObject = {
     {
       title: "Color B",
       allowedValues: ["color"],
-      id: ":colorB:",
+      token: ":colorB:",
       value: "Blue",
     },
   ],
