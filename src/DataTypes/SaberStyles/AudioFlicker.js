@@ -9,6 +9,7 @@ const styleObject = {
       token: ":colorA:",
       value: {
         title: "Color",
+        canEdit: true,
         description: "A simple color value",
         value: "White",
         displayValue: "White",
@@ -22,6 +23,7 @@ const styleObject = {
       token: ":colorB:",
       value: {
         title: "Color",
+        canEdit: true,
         description: "A simple color value",
         value: "Blue",
         displayValue: "Blue",

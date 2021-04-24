@@ -4,15 +4,19 @@ import StylesContext from "contexts/Styles"
 import { isEmpty } from "lodash"
 import { useContext, useMemo } from "react"
 
+import EditProperty from "./EditProperty"
 import PropertyInput from "./PropertyInput"
 import useStyles from "./styles"
 
 const PropertyEditor = () => {
   const classes = useStyles()
 
-  const { styles, updateStyleProperty, selectedStyle } = useContext(
-    StylesContext
-  )
+  const {
+    styles,
+    updateStyleProperty,
+    selectedStyle,
+    selectedProperty,
+  } = useContext(StylesContext)
 
   const selectedStyleFromList = useMemo(() => {
     if (!isEmpty(styles) && selectedStyle) {
@@ -25,8 +29,33 @@ const PropertyEditor = () => {
     updateStyleProperty(selectedStyleFromList.id, prop.token, colorValue)
   }
 
+  const selectedPropertyObject = useMemo(() => {
+    if (selectedProperty === undefined) return
+    const propertyObject = selectedStyleFromList?.properties?.find(
+      (p) => p.token === selectedProperty
+    )
+    return propertyObject
+  }, [selectedProperty, selectedStyleFromList.properties])
+
+  const canEditSelectedProperty = useMemo(() => {
+    if (selectedPropertyObject) {
+      return selectedPropertyObject.value.canEdit
+    }
+    return false
+  }, [selectedPropertyObject])
+
+  const handleSavePropertyValue = (newValue) => {
+    console.log(newValue)
+  }
+
   return (
-    <Box width="50%" flex="1 1 auto" bgcolor="#dadada" p={3}>
+    <Box
+      width="50%"
+      flex="1 1 auto"
+      bgcolor="#dadada"
+      p={3}
+      position="relative"
+    >
       {!isEmpty(selectedStyleFromList) && (
         <>
           <Typography variant="h5" className={classes.title}>
@@ -43,6 +72,11 @@ const PropertyEditor = () => {
           </Box>
         </>
       )}
+      <EditProperty
+        open={canEditSelectedProperty}
+        value={selectedPropertyObject?.value?.value}
+        onSave={handleSavePropertyValue}
+      />
     </Box>
   )
 }

@@ -15,7 +15,7 @@ const styles = makeStyles((theme) => ({
   focused: {
     borderWidth: 2,
     padding: "8px 16px",
-    borderColor: theme.palette.primary.light,
+    borderColor: theme.palette.primary.main,
   },
 }))
 
