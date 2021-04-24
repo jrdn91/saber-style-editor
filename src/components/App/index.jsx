@@ -1,5 +1,5 @@
 import Snackbar from "components/Snackbar"
-import AppContainer from "containers/App"
+import { AppContainer } from "contexts/App"
 import { withRouter } from "react-router"
 import Router, { routeConfig } from "router"
 

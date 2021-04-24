@@ -1,5 +1,5 @@
 import { AppBar as MuiAppBar, Button, Toolbar } from "@material-ui/core"
-import App from "contexts/App"
+import { AppContext } from "contexts/App"
 import firebase from "firebase/app"
 import { useContext } from "react"
 
@@ -8,7 +8,7 @@ import useStyles from "./styles"
 const AppBar = ({ children }) => {
   const classes = useStyles()
 
-  const { firebaseAuth } = useContext(App)
+  const { firebaseAuth } = useContext(AppContext)
 
   const handleSignInWithGoogle = () => {
     if (!firebaseAuth?.isSignedIn) {

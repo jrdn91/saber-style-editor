@@ -1,12 +1,12 @@
 import { Snackbar as MUISnackbar } from "@material-ui/core"
-import App from "contexts/App"
+import { AppContext } from "contexts/App"
 import useWidth from "hooks/useWidth"
 import { useContext, useMemo } from "react"
 
 const Snackbar = () => {
   const width = useWidth()
 
-  const { snackBar, openSnackBar } = useContext(App)
+  const { snackBar, openSnackBar } = useContext(AppContext)
 
   const snackBarOrigin = useMemo(() => {
     return width === "sm" || width === "xs"

@@ -1,4 +1,4 @@
-import App from "contexts/App"
+import { AppContext } from "contexts/App"
 import { useContext } from "react"
 import { Redirect, Route } from "react-router-dom"
 
@@ -6,7 +6,7 @@ import { Redirect, Route } from "react-router-dom"
 const ProtectedRoute = (props) => {
   // destructures passed in component
   const { component: C, ...routeProps } = props
-  const { token } = useContext(App)
+  const { token } = useContext(AppContext)
   return (
     <Route
       render={(p) =>

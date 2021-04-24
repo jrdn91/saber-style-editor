@@ -1,7 +1,7 @@
 import LoaderButton from "@bit/c_t.components.loader-button"
 import { TextField } from "@material-ui/core"
 import { login } from "actions/authentication"
-import App from "contexts/App"
+import { AppContext } from "contexts/App"
 import { Form, Formik } from "formik"
 import { useContext } from "react"
 import { useMutation } from "react-query"
@@ -13,7 +13,7 @@ import useStyles from "./styles"
 const LoginForm = () => {
   const classes = useStyles()
 
-  const authContext = useContext(App)
+  const authContext = useContext(AppContext)
 
   const loginMutation = useMutation(login)
 
