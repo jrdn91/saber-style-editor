@@ -10,28 +10,30 @@ import useStyles from "./styles"
 const PropertyEditor = () => {
   const classes = useStyles()
 
-  const { styles, updateStyleProperty, selected } = useContext(StylesContext)
+  const { styles, updateStyleProperty, selectedStyle } = useContext(
+    StylesContext
+  )
 
-  const selectedStyle = useMemo(() => {
-    if (!isEmpty(styles) && selected) {
-      return styles.find((s) => s.id === selected)
+  const selectedStyleFromList = useMemo(() => {
+    if (!isEmpty(styles) && selectedStyle) {
+      return styles.find((s) => s.id === selectedStyle)
     }
     return []
-  }, [styles, selected])
+  }, [styles, selectedStyle])
 
   const handleSetColorValue = (prop, colorValue) => {
-    updateStyleProperty(selectedStyle.id, prop.token, colorValue)
+    updateStyleProperty(selectedStyleFromList.id, prop.token, colorValue)
   }
 
   return (
     <Box width="50%" flex="1 1 auto" bgcolor="#dadada" p={3}>
-      {!isEmpty(selectedStyle) && (
+      {!isEmpty(selectedStyleFromList) && (
         <>
           <Typography variant="h5" className={classes.title}>
-            {selectedStyle.title}
+            {selectedStyleFromList.title}
           </Typography>
           <Box display="flex" flexDirection="column">
-            {selectedStyle.properties.map((prop) => (
+            {selectedStyleFromList.properties.map((prop) => (
               <PropertyInput
                 key={prop.token}
                 onColorChange={(color) => handleSetColorValue(prop, color)}

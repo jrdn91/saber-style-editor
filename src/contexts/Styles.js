@@ -20,7 +20,7 @@ componentsReq.keys().forEach((x) => {
 export const StylesContainer = ({ children }) => {
   const [styles, setStyles] = useState([])
   const [expanded, setExpanded] = useState([])
-  const [selected, setSelected] = useState()
+  const [selectedStyle, setSelectedStyle] = useState()
 
   useDeepCompareEffect(() => {
     if (!isEmpty(styles)) {
@@ -77,8 +77,8 @@ export const StylesContainer = ({ children }) => {
         updateStyleProperty,
         expanded,
         setExpanded,
-        selected,
-        setSelected,
+        selectedStyle,
+        setSelectedStyle,
       }}
     >
       {children}

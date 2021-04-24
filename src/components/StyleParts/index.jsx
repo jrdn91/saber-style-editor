@@ -20,7 +20,7 @@ import useStyles from "./styles"
 const StyleParts = ({ children }) => {
   const classes = useStyles()
 
-  const { styles, expanded, setExpanded, setSelected } = useContext(
+  const { styles, expanded, setExpanded, setSelectedStyle } = useContext(
     StylesContext
   )
 
@@ -57,7 +57,7 @@ const StyleParts = ({ children }) => {
               <ListItem
                 key={style.id}
                 button
-                onClick={() => setSelected(style.id)}
+                onClick={() => setSelectedStyle(style.id)}
                 className={classes.nested}
               >
                 <ListItemText primary={style.title} />
