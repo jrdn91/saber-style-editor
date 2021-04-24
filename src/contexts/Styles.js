@@ -1,4 +1,6 @@
-import { createContext, useState } from "react"
+import { isEmpty } from "lodash"
+import { createContext, useEffect, useState } from "react"
+import useDeepCompareEffect from "use-deep-compare-effect"
 import { v4 as uuidv4 } from "uuid"
 
 const StylesContext = createContext()
@@ -19,6 +21,20 @@ export const StylesContainer = ({ children }) => {
   const [styles, setStyles] = useState([])
   const [expanded, setExpanded] = useState([])
   const [selected, setSelected] = useState()
+
+  useDeepCompareEffect(() => {
+    if (!isEmpty(styles)) {
+      localStorage.setItem("styles", JSON.stringify(styles))
+    }
+  }, [styles])
+
+  useEffect(() => {
+    const storedStyles = localStorage.getItem("styles")
+    console.log("storedStyles", storedStyles)
+    if (storedStyles) {
+      setStyles(JSON.parse(storedStyles))
+    }
+  }, [])
 
   const addStyle = (style) => {
     const saberStyle = SaberStyles[style]
