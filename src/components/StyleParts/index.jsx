@@ -37,7 +37,7 @@ const StyleParts = ({ children }) => {
 
   if (isEmpty(styles)) {
     return (
-      <Box p={1}>
+      <Box p={1} className={classes.styleParts}>
         <Typography>
           Add your first style, by selecting one from the left hand menu
         </Typography>
