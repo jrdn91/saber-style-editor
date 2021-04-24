@@ -31,6 +31,7 @@ const AccordionMenu = ({ children }) => {
   return (
     <Box
       height="100%"
+      width="100%"
       maxWidth="320px"
       flexShrink={0}
       bgcolor="#fff"
@@ -69,7 +70,7 @@ const AccordionMenu = ({ children }) => {
           </List>
         </AccordionDetails>
       </Accordion>
-      <Accordion square elevation={0}>
+      {/* <Accordion square elevation={0}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel2a-content"
@@ -83,7 +84,7 @@ const AccordionMenu = ({ children }) => {
             malesuada lacus ex, sit amet blandit leo lobortis eget.
           </Typography>
         </AccordionDetails>
-      </Accordion>
+      </Accordion> */}
     </Box>
   )
 }
