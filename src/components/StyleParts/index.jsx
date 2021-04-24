@@ -57,7 +57,7 @@ const StyleParts = ({ children }) => {
               <ListItem
                 key={style.id}
                 button
-                onClick={() => setSelectedStyle(style.id)}
+                onClick={() => setSelectedStyle(style)}
                 className={classes.nested}
               >
                 <ListItemText primary={style.title} />

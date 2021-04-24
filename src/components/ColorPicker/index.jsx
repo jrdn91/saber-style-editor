@@ -1,7 +1,8 @@
 import { Box, IconButton, Popover } from "@material-ui/core"
 import useColorValue from "hooks/useColorValue"
 import usePrevious from "hooks/usePrevious"
-import { useCallback, useState } from "react"
+import { observer } from "mobx-react"
+import { useCallback, useEffect, useState } from "react"
 import { ChromePicker } from "react-color"
 
 import useStyles from "./styles"
@@ -9,7 +10,12 @@ import useStyles from "./styles"
 const ColorPicker = ({ value, onChange }) => {
   const classes = useStyles()
 
-  const [innerValue, setInnerValue] = useState(value)
+  const [innerValue, setInnerValue] = useState()
+
+  useEffect(() => {
+    setInnerValue(value)
+  }, [value])
+
   const previousInnerValue = usePrevious(innerValue)
 
   const [anchorEl, setAnchorEl] = useState(null)
@@ -68,4 +74,4 @@ const ColorPicker = ({ value, onChange }) => {
   )
 }
 
-export default ColorPicker
+export default observer(ColorPicker)

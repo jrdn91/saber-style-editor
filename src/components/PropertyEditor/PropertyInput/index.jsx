@@ -2,26 +2,26 @@ import { Box } from "@material-ui/core"
 import classnames from "clsx"
 import ColorPicker from "components/ColorPicker"
 import StylesContext from "contexts/Styles"
-import useColorValue from "hooks/useColorValue"
+import { observer } from "mobx-react"
 import { useContext, useMemo } from "react"
 
 import useStyles from "./styles"
 
-const PropertyInput = ({ onColorChange, ...props }) => {
+const PropertyInput = ({ onColorChange, property }) => {
   const classes = useStyles()
-
-  // const colorValue = useColorValue(props.value)
 
   const { selectedProperty, setSelectedProperty } = useContext(StylesContext)
 
   const handleInputClick = () => {
-    setSelectedProperty(props.token)
+    setSelectedProperty(property)
   }
 
   const isSelected = useMemo(() => {
     if (selectedProperty === undefined) return
-    return selectedProperty === props.token
-  }, [selectedProperty, props.token])
+    return selectedProperty === property
+  }, [selectedProperty, property])
+
+  console.log("value", property?.value?.value)
 
   return (
     <Box
@@ -30,10 +30,10 @@ const PropertyInput = ({ onColorChange, ...props }) => {
       })}
       onClick={handleInputClick}
     >
-      {props.value.displayValue}
-      <ColorPicker onChange={onColorChange} value={props.value.value} />
+      {property?.value?.displayValue}
+      <ColorPicker onChange={onColorChange} value={property?.value?.value} />
     </Box>
   )
 }
 
-export default PropertyInput
+export default observer(PropertyInput)

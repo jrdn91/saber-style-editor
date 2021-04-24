@@ -18,8 +18,8 @@ const EditProperty = ({ value, open = false, onSave }) => {
   const [innerValue, setInnerValue] = useState("")
 
   useEffect(() => {
-    setInnerValue(value)
-  }, [value])
+    setInnerValue(value?.value)
+  }, [value?.value])
 
   console.log("innerValue", innerValue)
 
@@ -28,7 +28,8 @@ const EditProperty = ({ value, open = false, onSave }) => {
   }
 
   const handleSave = () => {
-    onSave(innerValue)
+    console.log(value)
+    value.update(innerValue)
   }
 
   return (
