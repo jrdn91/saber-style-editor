@@ -1,4 +1,4 @@
-import { Box, InputAdornment, TextField } from "@material-ui/core"
+import { Box } from "@material-ui/core"
 import classnames from "clsx"
 import ColorPicker from "components/ColorPicker"
 import StylesContext from "contexts/Styles"
@@ -13,8 +13,6 @@ const PropertyInput = ({ onColorChange, ...props }) => {
   const colorValue = useColorValue(props.value)
 
   const { selectedProperty, setSelectedProperty } = useContext(StylesContext)
-
-  console.log(selectedProperty)
 
   const handleInputClick = () => {
     setSelectedProperty(props.token)
@@ -35,24 +33,6 @@ const PropertyInput = ({ onColorChange, ...props }) => {
       {colorValue}
       <ColorPicker onChange={onColorChange} value={props.value} />
     </Box>
-    // <TextField
-    //   className={classes.textField}
-    //   key={props.token}
-    //   label={props.title}
-    //   name={props.token}
-    //   id={props.token}
-    //   value={colorValue}
-    //   focused={selectedProperty?.token === props.token}
-    //   readOnly
-    //   onClick={handleInputClick}
-    //   InputProps={{
-    //     endAdornment: props.allowedValues.includes("color") ? (
-    //       <InputAdornment position="end">
-    //         <ColorPicker onChange={onColorChange} value={props.value} />
-    //       </InputAdornment>
-    //     ) : null,
-    //   }}
-    // />
   )
 }
 
