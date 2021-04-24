@@ -30,7 +30,6 @@ export const StylesContainer = ({ children }) => {
 
   useEffect(() => {
     const storedStyles = localStorage.getItem("styles")
-    console.log("storedStyles", storedStyles)
     if (storedStyles) {
       setStyles(JSON.parse(storedStyles))
     }
