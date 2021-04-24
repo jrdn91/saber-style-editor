@@ -10,7 +10,7 @@ import useStyles from "./styles"
 const PropertyInput = ({ onColorChange, ...props }) => {
   const classes = useStyles()
 
-  const colorValue = useColorValue(props.value)
+  // const colorValue = useColorValue(props.value)
 
   const { selectedProperty, setSelectedProperty } = useContext(StylesContext)
 
@@ -30,8 +30,8 @@ const PropertyInput = ({ onColorChange, ...props }) => {
       })}
       onClick={handleInputClick}
     >
-      {colorValue}
-      <ColorPicker onChange={onColorChange} value={props.value} />
+      {props.value.displayValue}
+      <ColorPicker onChange={onColorChange} value={props.value.value} />
     </Box>
   )
 }
