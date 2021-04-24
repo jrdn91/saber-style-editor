@@ -8,7 +8,7 @@ export default StylesContext
 
 export const SaberStyles = {}
 const componentsReq = require.context(
-  "../SaberStyles",
+  "../DataTypes/SaberStyles",
   true,
   /^(.*\.(js))[^.]*$/im
 )
