@@ -5,15 +5,29 @@ const styleObject = {
   properties: [
     {
       title: "Color A",
-      allowedValues: ["color"],
+      allowedValueTypes: ["Color", "Rgb"],
       token: ":colorA:",
-      value: "White",
+      value: {
+        title: "Color",
+        description: "A simple color value",
+        value: "White",
+        displayValue: "White",
+        token: ":color:",
+        template: ":color:",
+      },
     },
     {
       title: "Color B",
-      allowedValues: ["color"],
+      allowedValueTypes: ["Color", "Rgb"],
       token: ":colorB:",
-      value: "Blue",
+      value: {
+        title: "Color",
+        description: "A simple color value",
+        value: "Blue",
+        displayValue: "Blue",
+        token: ":color:",
+        template: ":color:",
+      },
     },
   ],
   template: "AudioFlicker<:colorA:,:colorB:>",
