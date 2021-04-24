@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "jsx": "react",
+    "baseUrl": "src/",
+    "paths": {
+      "components/*": ["src/components/*"],
+      "dialogs/*": ["src/dialogs/*"],
+      "actions/*": ["src/actions/*"],
+      "reducers/*": ["src/reducers/*"],
+      "router": ["src/router.jsx"],
+      "store/*": ["src/store/*"],
+      "types/*": ["src/types/*"],
+      "pages/*": ["src/pages/*"]
+    }
+  },
+  "exclude": ["node_modules"]
+}
