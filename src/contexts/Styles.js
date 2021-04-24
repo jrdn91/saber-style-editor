@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid"
 const StylesContext = createContext()
 export default StylesContext
 
-const SaberStyles = {}
+export const SaberStyles = {}
 const componentsReq = require.context(
   "../SaberStyles",
   true,
