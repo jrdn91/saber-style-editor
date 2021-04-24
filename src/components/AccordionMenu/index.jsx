@@ -8,11 +8,13 @@ import {
   ListItem,
   ListItemSecondaryAction,
   ListItemText,
+  Tooltip,
   Typography,
 } from "@material-ui/core"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import InfoIcon from "@material-ui/icons/Info"
 import StylesContext from "contexts/Styles"
+import { SaberStyles } from "contexts/Styles"
 import { useContext } from "react"
 
 import useStyles from "./styles"
@@ -20,7 +22,7 @@ import useStyles from "./styles"
 const AccordionMenu = ({ children }) => {
   const classes = useStyles()
 
-  const { addStyle } = useContext(StylesContext)
+  const { addStyle, styles } = useContext(StylesContext)
 
   const handleAddStyle = (style) => (e) => {
     addStyle(style)
@@ -44,14 +46,26 @@ const AccordionMenu = ({ children }) => {
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetails}>
           <List dense disablePadding className={classes.list}>
-            <ListItem button onClick={handleAddStyle("AudioFlicker")}>
-              <ListItemText primary="AudioFlicker" />
-              <ListItemSecondaryAction className={classes.listSecondaryAction}>
-                <IconButton size="small" edge="end" aria-label="info">
-                  <InfoIcon style={{ fontSize: "1rem" }} />
-                </IconButton>
-              </ListItemSecondaryAction>
-            </ListItem>
+            {Object.keys(SaberStyles).map((style) => (
+              <ListItem
+                key={style}
+                button
+                disabled={styles.find((s) => s.title === style)}
+                onClick={handleAddStyle(style)}
+              >
+                <ListItemText primary={style} />
+                <ListItemSecondaryAction
+                  className={classes.listSecondaryAction}
+                >
+                  <Tooltip
+                    title={SaberStyles[style].description}
+                    placement="right"
+                  >
+                    <InfoIcon style={{ fontSize: "1rem" }} />
+                  </Tooltip>
+                </ListItemSecondaryAction>
+              </ListItem>
+            ))}
           </List>
         </AccordionDetails>
       </Accordion>
