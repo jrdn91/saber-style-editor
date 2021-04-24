@@ -10,8 +10,6 @@ const AppBar = ({ children }) => {
 
   const { firebaseAuth } = useContext(App)
 
-  console.log(firebaseAuth)
-
   const handleSignInWithGoogle = () => {
     if (!firebaseAuth?.isSignedIn) {
       const googleAuthProvider = new firebase.auth.GoogleAuthProvider()

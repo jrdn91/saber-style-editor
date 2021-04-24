@@ -23,7 +23,7 @@ function ErrorFallback({ error, resetErrorBoundary }) {
 
 export default class Page extends Component {
   static propTypes = {
-    prop: PropTypes,
+    children: PropTypes.node,
   }
 
   render() {

@@ -6,8 +6,6 @@ import Lottie from "react-lottie"
 
 import styles from "./styles"
 
-console.log(animationData)
-
 class NotFound extends Component {
   render() {
     const { classes } = this.props
