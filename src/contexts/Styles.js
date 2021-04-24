@@ -7,14 +7,25 @@ const StylesContext = createContext()
 export default StylesContext
 
 export const SaberStyles = {}
-const componentsReq = require.context(
+const saberStylesReq = require.context(
   "../DataTypes/SaberStyles",
   true,
   /^(.*\.(js))[^.]*$/im
 )
-componentsReq.keys().forEach((x) => {
+saberStylesReq.keys().forEach((x) => {
   const saberStyleName = x.match(/\.\/([A-Za-z]+).js/)
-  SaberStyles[saberStyleName[1]] = componentsReq(x).default
+  SaberStyles[saberStyleName[1]] = saberStylesReq(x).default
+})
+
+export const ValueTypes = {}
+const valueTypesReq = require.context(
+  "../DataTypes/ValueTypes",
+  true,
+  /^(.*\.(js))[^.]*$/im
+)
+valueTypesReq.keys().forEach((x) => {
+  const valueTypeName = x.match(/\.\/([A-Za-z]+).js/)
+  ValueTypes[valueTypeName[1]] = valueTypesReq(x).default
 })
 
 export const StylesContainer = ({ children }) => {
