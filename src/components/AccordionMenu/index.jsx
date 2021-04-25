@@ -74,14 +74,7 @@ const AccordionMenu = ({ children }) => {
   const open = Boolean(anchorEl)
 
   return (
-    <Box
-      height="100%"
-      width="100%"
-      maxWidth="320px"
-      flexShrink={0}
-      bgcolor="#fff"
-      overflow="auto"
-    >
+    <Box className={classes.accordionMenu}>
       <Accordion square elevation={0}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}

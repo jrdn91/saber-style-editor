@@ -20,6 +20,9 @@ const Number = types
     update(newValue) {
       self.value = parseInt(newValue)
     },
+    getCode() {
+      return `${self.template.replace(self.token, self.displayValue)}`
+    },
   }))
 
 export default Number

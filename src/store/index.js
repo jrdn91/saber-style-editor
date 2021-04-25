@@ -39,6 +39,10 @@ const Store = t
     removeToken(tokenId) {
       self.tokens = self.tokens.filter((l) => l.id !== tokenId)
     },
+    getCode() {
+      const layerCodes = self.layers.map((layer) => layer.getCode())
+      return `StylePtr<Layers<${layerCodes.join(",")}>>()`
+    },
   }))
 
 export default Store

@@ -20,15 +20,15 @@ const Rgb = types
   })
   .views((self) => ({
     get displayValue() {
-      return `Rgb(${self.value.r},${self.value.g},${self.value.b})`
+      return `Rgb<${self.value.r},${self.value.g},${self.value.b}>`
     },
   }))
   .actions((self) => ({
     update(newValue) {
       if (typeof newValue === "string") {
         const valueParts = newValue
-          .replace("Rgb(", "")
-          .replace(")", "")
+          .replace("Rgb<", "")
+          .replace(">", "")
           .split(",")
         self.value = {
           r: parseInt(valueParts[0]),
@@ -39,6 +39,9 @@ const Rgb = types
       } else {
         self.value = newValue
       }
+    },
+    getCode() {
+      return `${self.template.replace(self.token, self.displayValue)}`
     },
   }))
 

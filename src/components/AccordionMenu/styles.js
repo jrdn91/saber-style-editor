@@ -1,6 +1,16 @@
 import { makeStyles } from "@material-ui/core/styles"
 
 const styles = makeStyles((theme) => ({
+  accordionMenu: {
+    height: "100%",
+    width: "100%",
+    maxWidth: "320px",
+    flexShrink: 0,
+    backgroundColor: "#fff",
+    overflow: "auto",
+    position: "relative",
+    zIndex: 3,
+  },
   accordionDetails: {
     flexDirection: "column",
     padding: theme.spacing(1, 0, 2),

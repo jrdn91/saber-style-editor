@@ -20,6 +20,9 @@ const Color = types
     update(newValue) {
       self.value = newValue
     },
+    getCode() {
+      return `${self.template.replace(self.token, self.displayValue)}`
+    },
   }))
 
 export default Color

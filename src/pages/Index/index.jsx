@@ -1,6 +1,7 @@
 import { Box } from "@material-ui/core"
 import AccordionMenu from "components/AccordionMenu"
 import AppBar from "components/AppBar"
+import Controls from "components/Controls"
 import PropertyEditor from "components/PropertyEditor"
 import SaberViewer from "components/SaberViewer"
 import StyleParts from "components/StyleParts"
@@ -21,6 +22,9 @@ const Index = () => {
           <AccordionMenu />
           <Box display="flex" flex="1 1 auto" flexDirection="column">
             <SaberViewer />
+            <Box flex="0 0 auto">
+              <Controls />
+            </Box>
             <Box display="flex" flexGrow="1">
               <StyleParts />
               <PropertyEditor />

@@ -16,6 +16,9 @@ const BrownNoiseFlickerProperty = types
     updateValue(newValue) {
       self.value = newValue
     },
+    getCode() {
+      return self.value.getCode()
+    },
   }))
 
 const BrownNoiseFlicker = types
@@ -53,6 +56,16 @@ const BrownNoiseFlicker = types
         }
         return p
       })
+    },
+    getCode() {
+      let templateString = self.template
+      self.properties.forEach((property) => {
+        templateString = templateString.replace(
+          property.token,
+          property.getCode()
+        )
+      })
+      return templateString
     },
   }))
 

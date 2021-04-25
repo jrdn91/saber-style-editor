@@ -16,6 +16,9 @@ const AudioFlickerProperty = types
     updateValue(newValue) {
       self.value = newValue
     },
+    getCode() {
+      return self.value.getCode()
+    },
   }))
 
 const AudioFlicker = types
@@ -49,6 +52,16 @@ const AudioFlicker = types
         }
         return p
       })
+    },
+    getCode() {
+      let templateString = self.template
+      self.properties.forEach((property) => {
+        templateString = templateString.replace(
+          property.token,
+          property.getCode()
+        )
+      })
+      return templateString
     },
   }))
 
