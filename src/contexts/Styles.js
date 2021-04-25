@@ -53,45 +53,7 @@ export const StylesContainer = ({ children }) => {
   const addStyle = (style) => {
     const saberStyle = SaberStyles[style]
     try {
-      const newStyle = saberStyle.create({
-        id: uuidv4(),
-        title: "AudioFlicker",
-        description:
-          "Mixes between A and B based on audio. Quiet audio means more A, loud audio means more B. Based on a single sample instead of an average to make it flicker.",
-        properties: [
-          Property.create({
-            id: uuidv4(),
-            title: "Color A",
-            allowedValueTypes: ["Color", "Rgb"],
-            token: ":colorA:",
-            value: Color.create({
-              id: uuidv4(),
-              title: "Color",
-              description: "A simple color value",
-              value: "White",
-              token: ":color:",
-              template: ":color:",
-              canEdit: true,
-            }),
-          }),
-          Property.create({
-            id: uuidv4(),
-            title: "Color A",
-            allowedValueTypes: ["Color", "Rgb"],
-            token: ":colorB:",
-            value: Color.create({
-              id: uuidv4(),
-              title: "Color",
-              description: "A simple color value",
-              value: "Blue",
-              token: ":color:",
-              template: ":color:",
-              canEdit: true,
-            }),
-          }),
-        ],
-        template: "AudioFlicker<:colorA:,:colorB:>",
-      })
+      const newStyle = saberStyle.create()
       setStyles((prevStyles) => [...prevStyles, newStyle])
     } catch (e) {
       console.error(e)

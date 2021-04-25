@@ -6,30 +6,29 @@ import {
   OutlinedInput,
   Paper,
 } from "@material-ui/core"
-import { useEffect, useState } from "react"
+import StylesContext from "contexts/Styles"
+import { useContext, useEffect, useState } from "react"
 
 import useStyles from "./styles"
 
 const EditProperty = ({ value, open = false, onSave }) => {
   const classes = useStyles()
 
-  console.log("value", value)
+  const { setSelectedProperty } = useContext(StylesContext)
 
   const [innerValue, setInnerValue] = useState("")
 
   useEffect(() => {
-    setInnerValue(value?.value)
-  }, [value?.value])
-
-  console.log("innerValue", innerValue)
+    setInnerValue(value?.displayValue)
+  }, [value?.displayValue])
 
   const handleOnChange = (e) => {
     setInnerValue(e.target.value)
   }
 
   const handleSave = () => {
-    console.log(value)
     value.update(innerValue)
+    setSelectedProperty()
   }
 
   return (
