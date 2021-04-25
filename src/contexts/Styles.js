@@ -1,4 +1,6 @@
-import { createContext, useState } from "react"
+import { persist } from "mst-persist"
+import { createContext, useEffect, useState } from "react"
+import Store from "store"
 
 const StylesContext = createContext()
 export default StylesContext
@@ -27,7 +29,8 @@ valueTypesReq.keys().forEach((x) => {
 
 export const StylesContainer = ({ children }) => {
   const [styles, setStyles] = useState([])
-  const [expanded, setExpanded] = useState([])
+  const [store, setStore] = useState()
+  const [expanded, setExpanded] = useState([-1])
   const [selectedStyle, setSelectedStyle] = useState() // currently selected style
   const [selectedProperty, setSelectedProperty] = useState() //currently selected property in the selectedStyle
 
@@ -37,18 +40,22 @@ export const StylesContainer = ({ children }) => {
   //   }
   // }, [styles])
 
-  // useEffect(() => {
-  //   const storedStyles = localStorage.getItem("styles")
-  //   if (storedStyles) {
-  //     setStyles(JSON.parse(storedStyles))
-  //   }
-  // }, [])
+  useEffect(() => {
+    const newStore = Store.create()
+    setStore(newStore)
+    persist("Saber Style Editor", newStore, {})
+    // const storedStyles = localStorage.getItem("styles")
+    // if (storedStyles) {
+    //   setStyles(JSON.parse(storedStyles))
+    // }
+  }, [])
 
   const addStyle = (style) => {
     const saberStyle = SaberStyles[style]
     try {
       const newStyle = saberStyle.create()
-      setStyles((prevStyles) => [...prevStyles, newStyle])
+      store.addLayer(newStyle)
+      // setStyles((prevStyles) => [...prevStyles, newStyle])
     } catch (e) {
       console.error(e)
       throw new Error(`Could not add style of type ${style}`)
@@ -82,6 +89,7 @@ export const StylesContainer = ({ children }) => {
       value={{
         addStyle,
         styles,
+        store,
         updateStyleProperty,
         expanded,
         setExpanded,

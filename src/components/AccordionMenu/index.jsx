@@ -3,30 +3,75 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
+  Button,
   IconButton,
   List,
   ListItem,
+  ListItemIcon,
   ListItemSecondaryAction,
   ListItemText,
+  Popover,
   Tooltip,
   Typography,
 } from "@material-ui/core"
+import AddCircleIcon from "@material-ui/icons/AddCircle"
+import DeleteIcon from "@material-ui/icons/Delete"
+import EditIcon from "@material-ui/icons/Edit"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import InfoIcon from "@material-ui/icons/Info"
+import { AppContext } from "contexts/App"
 import StylesContext from "contexts/Styles"
 import { SaberStyles } from "contexts/Styles"
-import { useContext } from "react"
+import { isEmpty } from "lodash"
+import { useContext, useState } from "react"
 
 import useStyles from "./styles"
 
 const AccordionMenu = ({ children }) => {
   const classes = useStyles()
 
-  const { addStyle, styles } = useContext(StylesContext)
+  const { openDialog } = useContext(AppContext)
+  const { addStyle, styles, store, selectedProperty } = useContext(
+    StylesContext
+  )
 
   const handleAddStyle = (style) => (e) => {
     addStyle(style)
   }
+
+  const handleCreateNewToken = () => {
+    openDialog("editToken")
+  }
+
+  const handleTokenClick = (token) => () => {
+    if (!isEmpty(selectedProperty)) {
+      selectedProperty.updateValue(token)
+    }
+  }
+
+  const [anchorEl, setAnchorEl] = useState(null)
+  const [deleteToken, setDeleteToken] = useState()
+
+  const handleConfirmDeleteToken = (token) => (event) => {
+    setDeleteToken(token)
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+    setDeleteToken(null)
+  }
+
+  const handleDeleteToken = () => {
+    store.removeToken(deleteToken.id)
+    handleClose()
+  }
+
+  const handleEditToken = (token) => () => {
+    openDialog("editToken", token)
+  }
+
+  const open = Boolean(anchorEl)
 
   return (
     <Box
@@ -40,8 +85,8 @@ const AccordionMenu = ({ children }) => {
       <Accordion square elevation={0}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
+          aria-controls="styles-content"
+          id="styles-header"
         >
           <Typography className={classes.heading}>Styles</Typography>
         </AccordionSummary>
@@ -70,21 +115,97 @@ const AccordionMenu = ({ children }) => {
           </List>
         </AccordionDetails>
       </Accordion>
-      {/* <Accordion square elevation={0}>
+      <Accordion square elevation={0}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2a-content"
-          id="panel2a-header"
+          aria-controls="tokens-content"
+          id="tokens-header"
         >
-          <Typography className={classes.heading}>Accordion 2</Typography>
+          <Typography className={classes.heading}>Tokens</Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetails}>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
+          <Typography
+            variant="caption"
+            style={{
+              textAlign: "center",
+              padding: "0 8px",
+              marginBottom: 16,
+              opacity: 0.5,
+            }}
+          >
+            Tokens are repeatable values you can use and compose to create
+            styles that share similar values much easier
           </Typography>
+          <List dense disablePadding className={classes.list}>
+            <ListItem button onClick={handleCreateNewToken}>
+              <ListItemIcon>
+                <AddCircleIcon />
+              </ListItemIcon>
+              <ListItemText primary="Create new Token" />
+            </ListItem>
+            {store?.tokens?.map((token) => (
+              <ListItem
+                key={token.id}
+                button
+                onClick={handleTokenClick(token)}
+                className={classes.tokenListItem}
+              >
+                <ListItemIcon>
+                  <IconButton
+                    size="small"
+                    edge="start"
+                    aria-label="edit"
+                    onClick={handleEditToken(token)}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                </ListItemIcon>
+                <ListItemText primary={token.title} secondary={token.value} />
+                <ListItemSecondaryAction>
+                  <IconButton
+                    onClick={handleConfirmDeleteToken(token)}
+                    size="small"
+                    edge="end"
+                    aria-label="delete"
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </ListItem>
+            ))}
+          </List>
         </AccordionDetails>
-      </Accordion> */}
+      </Accordion>
+      <Popover
+        id="Delete token"
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "center",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "center",
+          horizontal: "left",
+        }}
+      >
+        <Box p={2}>
+          <Typography>Are you sure you want to remove this token?</Typography>
+          <Box display="flex" justifyContent="flex-end" paddingTop={2}>
+            <Button size="small" onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button
+              size="small"
+              onClick={handleDeleteToken}
+              className={classes.confirmButton}
+            >
+              Yes, Delete
+            </Button>
+          </Box>
+        </Box>
+      </Popover>
     </Box>
   )
 }

@@ -5,6 +5,7 @@ import PropertyEditor from "components/PropertyEditor"
 import SaberViewer from "components/SaberViewer"
 import StyleParts from "components/StyleParts"
 import { StylesContainer } from "contexts/Styles"
+import EditTokenDialog from "dialogs/EditToken"
 import Page from "pages/Page"
 
 import useStyles from "./styles"
@@ -25,6 +26,7 @@ const Index = () => {
               <PropertyEditor />
             </Box>
           </Box>
+          <EditTokenDialog />
         </StylesContainer>
       </Box>
     </Page>

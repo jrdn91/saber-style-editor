@@ -21,6 +21,11 @@ export const AppContainer = ({ children }) => {
     autoHideDuration: 3000,
   })
 
+  /**
+   * Set data and open dialog
+   * @param {string} name
+   * @param {Object} data
+   */
   const openDialog = (name, data) => {
     setDialogsState({
       ...dialogs,
@@ -30,12 +35,13 @@ export const AppContainer = ({ children }) => {
       },
     })
     setTimeout(() => {
-      setDialogsState({
+      setDialogsState((newDialogs) => ({
+        ...newDialogs,
         [name]: {
-          ...dialogs[name],
+          ...newDialogs[name],
           open: true,
         },
-      })
+      }))
     }, 150)
     dialogPromises.current = {
       ...dialogPromises.current,
@@ -52,6 +58,7 @@ export const AppContainer = ({ children }) => {
       dialogPromises.current[name].reject(data)
     }
     setDialogsState({
+      ...dialogs,
       [name]: {
         ...dialogs[name],
         open: false,
@@ -59,6 +66,7 @@ export const AppContainer = ({ children }) => {
     })
     setTimeout(() => {
       setDialogsState({
+        ...dialogs,
         [name]: {
           ...dialogs[name],
           data: {},

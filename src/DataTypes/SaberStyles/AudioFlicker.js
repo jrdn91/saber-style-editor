@@ -1,3 +1,4 @@
+import Token from "DataTypes/Token"
 import Color from "DataTypes/ValueTypes/Color"
 import Rgb from "DataTypes/ValueTypes/Rgb"
 import { types } from "mobx-state-tree"
@@ -9,7 +10,7 @@ const AudioFlickerProperty = types
     title: types.optional(types.string, "Property"),
     allowedValueTypes: types.optional(types.array(types.string), [""]),
     token: types.optional(types.string, ":property:"),
-    value: types.union(Color, Rgb),
+    value: types.union(Color, Rgb, types.reference(Token)),
   })
   .actions((self) => ({
     updateValue(newValue) {

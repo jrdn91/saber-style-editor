@@ -13,6 +13,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import { TreeItem, TreeView } from "@material-ui/lab"
 import StylesContext from "contexts/Styles"
 import { isEmpty } from "lodash"
+import { observer } from "mobx-react"
 import { useCallback, useContext, useState } from "react"
 
 import useStyles from "./styles"
@@ -20,7 +21,7 @@ import useStyles from "./styles"
 const StyleParts = ({ children }) => {
   const classes = useStyles()
 
-  const { styles, expanded, setExpanded, setSelectedStyle } = useContext(
+  const { store, expanded, setExpanded, setSelectedStyle } = useContext(
     StylesContext
   )
 
@@ -35,7 +36,7 @@ const StyleParts = ({ children }) => {
     [expanded, setExpanded]
   )
 
-  if (isEmpty(styles)) {
+  if (isEmpty(store?.layers)) {
     return (
       <Box p={1} className={classes.styleParts}>
         <Typography>
@@ -53,7 +54,7 @@ const StyleParts = ({ children }) => {
         </ListItem>
         <Collapse in={expanded.includes(-1)} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            {styles.map((style, index) => (
+            {store.layers.map((style, index) => (
               <ListItem
                 key={style.id}
                 button
@@ -87,4 +88,4 @@ const StyleParts = ({ children }) => {
   // )
 }
 
-export default StyleParts
+export default observer(StyleParts)
