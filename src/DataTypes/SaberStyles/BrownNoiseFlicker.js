@@ -25,7 +25,10 @@ const BrownNoiseFlicker = types
   .model("BrownNoiseFlicker", {
     id: types.optional(types.identifier, uuidv4()),
     title: types.optional(types.string, "BrownNoiseFlicker"),
-    description: types.optional(types.string, "A base Saber Style"),
+    description: types.optional(
+      types.string,
+      "Randomly selects between A and B, but keeps nearby pixels looking similar."
+    ),
     template: types.optional(
       types.string,
       "BrownNoiseFlicker<:colorA:,:colorB:,:grade:>"

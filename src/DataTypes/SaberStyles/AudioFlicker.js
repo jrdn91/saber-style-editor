@@ -25,7 +25,10 @@ const AudioFlicker = types
   .model("AudioFlicker", {
     id: types.optional(types.identifier, uuidv4()),
     title: types.optional(types.string, "AudioFlicker"),
-    description: types.optional(types.string, "A base Saber Style"),
+    description: types.optional(
+      types.string,
+      "Mixes between A and B based on audio. Quiet audio means more A, loud audio means more B. Based on a single sample instead of an average to make it flicker."
+    ),
     template: types.optional(types.string, "AudioFlicker<:colorA:,:colorB:>"),
     allowedValueTypes: types.optional(types.array(types.string), [
       "Color",

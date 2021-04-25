@@ -1,4 +1,6 @@
+import BaseLayer from "DataTypes/LayerTypes/BaseLayer"
 import Token from "DataTypes/Token"
+import Color from "DataTypes/ValueTypes/Color"
 import { types as t } from "mobx-state-tree"
 
 export const SaberStyles = {}
@@ -12,12 +14,25 @@ saberStylesReq.keys().forEach((x) => {
   SaberStyles[saberStyleName[1]] = saberStylesReq(x).default
 })
 
+export const LayerTypes = {}
+const layerTypesReq = require.context(
+  "../DataTypes/LayerTypes",
+  true,
+  /^(.*\.(js))[^.]*$/im
+)
+layerTypesReq.keys().forEach((x) => {
+  const saberStyleName = x.match(/\.\/([A-Za-z]+).js/)
+  LayerTypes[saberStyleName[1]] = layerTypesReq(x).default
+})
+
 const Store = t
   .model({
-    layers: t.array(t.union(...Object.values(SaberStyles))),
+    layers: t.optional(t.array(t.union(...Object.values(LayerTypes))), [
+      BaseLayer.create({ value: Color.create({ value: "Blue" }) }),
+    ]),
     tokens: t.array(Token),
     selectedLayer: t.maybeNull(
-      t.reference(t.union(...Object.values(SaberStyles)))
+      t.reference(t.union(...Object.values(LayerTypes)))
     ),
   })
   .actions((self) => ({
@@ -28,7 +43,7 @@ const Store = t
       self.layers.push(layer)
     },
     removeLayer(layerId) {
-      if (self.selectedLayer.id === layerId) {
+      if (self?.selectedLayer?.id === layerId) {
         self.setSelectedLayer(null)
       }
       self.layers = self.layers.filter((l) => l.id !== layerId)

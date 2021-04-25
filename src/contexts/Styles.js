@@ -16,6 +16,17 @@ saberStylesReq.keys().forEach((x) => {
   SaberStyles[saberStyleName[1]] = saberStylesReq(x).default
 })
 
+export const LayerTypes = {}
+const layerTypesReq = require.context(
+  "../DataTypes/LayerTypes",
+  true,
+  /^(.*\.(js))[^.]*$/im
+)
+layerTypesReq.keys().forEach((x) => {
+  const saberStyleName = x.match(/\.\/([A-Za-z]+).js/)
+  LayerTypes[saberStyleName[1]] = layerTypesReq(x).default
+})
+
 export const ValueTypes = {}
 const valueTypesReq = require.context(
   "../DataTypes/ValueTypes",

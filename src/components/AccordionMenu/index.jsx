@@ -21,11 +21,15 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import InfoIcon from "@material-ui/icons/Info"
 import { AppContext } from "contexts/App"
 import StylesContext from "contexts/Styles"
-import { SaberStyles } from "contexts/Styles"
+import { LayerTypes, SaberStyles } from "contexts/Styles"
+import BaseLayer from "DataTypes/LayerTypes/BaseLayer"
 import { isEmpty } from "lodash"
+import { getType } from "mobx-state-tree"
 import { useContext, useState } from "react"
 
 import useStyles from "./styles"
+
+console.log(SaberStyles)
 
 const AccordionMenu = ({ children }) => {
   const classes = useStyles()
@@ -71,33 +75,42 @@ const AccordionMenu = ({ children }) => {
     openDialog("editToken", token)
   }
 
+  const handleAddLayer = (layer) => () => {
+    console.log(layer)
+  }
+
   const open = Boolean(anchorEl)
 
   return (
     <Box className={classes.accordionMenu}>
-      <Accordion square elevation={0}>
+      <Accordion expanded square elevation={0}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
-          aria-controls="styles-content"
-          id="styles-header"
+          aria-controls="layers-content"
+          id="layers-header"
         >
-          <Typography className={classes.heading}>Styles</Typography>
+          <Typography className={classes.heading}>Layers</Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetails}>
           <List dense disablePadding className={classes.list}>
-            {Object.keys(SaberStyles).map((style) => (
+            {Object.keys(LayerTypes).map((type) => (
               <ListItem
-                key={style}
+                key={type}
                 button
-                disabled={styles.find((s) => s.title === style)}
-                onClick={handleAddStyle(style)}
+                disabled={
+                  store?.layers?.find((l) => getType(l).name === type) !==
+                  undefined
+                }
+                onClick={handleAddLayer(type)}
               >
-                <ListItemText primary={style} />
+                <ListItemText primary={type} />
                 <ListItemSecondaryAction
                   className={classes.listSecondaryAction}
                 >
                   <Tooltip
-                    title={SaberStyles[style].description}
+                    title={
+                      LayerTypes[type].properties.description._defaultValue
+                    }
                     placement="right"
                   >
                     <InfoIcon style={{ fontSize: "1rem" }} />
@@ -108,7 +121,37 @@ const AccordionMenu = ({ children }) => {
           </List>
         </AccordionDetails>
       </Accordion>
-      <Accordion square elevation={0}>
+      <Accordion expanded square elevation={0}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="styles-content"
+          id="styles-header"
+        >
+          <Typography className={classes.heading}>Styles</Typography>
+        </AccordionSummary>
+        <AccordionDetails className={classes.accordionDetails}>
+          <List dense disablePadding className={classes.list}>
+            {Object.keys(SaberStyles).map((style) => (
+              <ListItem key={style} button onClick={handleAddStyle(style)}>
+                <ListItemText primary={style} />
+                <ListItemSecondaryAction
+                  className={classes.listSecondaryAction}
+                >
+                  <Tooltip
+                    title={
+                      SaberStyles[style].properties.description._defaultValue
+                    }
+                    placement="right"
+                  >
+                    <InfoIcon style={{ fontSize: "1rem" }} />
+                  </Tooltip>
+                </ListItemSecondaryAction>
+              </ListItem>
+            ))}
+          </List>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion expanded square elevation={0}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="tokens-content"
