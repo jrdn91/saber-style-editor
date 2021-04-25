@@ -1,13 +1,16 @@
 import {
   Box,
   Collapse,
+  IconButton,
   List,
   ListItem,
+  ListItemSecondaryAction,
   ListItemText,
   Paper,
   Typography,
 } from "@material-ui/core"
 import ChevronRightIcon from "@material-ui/icons/ChevronRight"
+import DeleteIcon from "@material-ui/icons/Delete"
 import ExpandLessIcon from "@material-ui/icons/ExpandLess"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import { TreeItem, TreeView } from "@material-ui/lab"
@@ -21,9 +24,7 @@ import useStyles from "./styles"
 const StyleParts = ({ children }) => {
   const classes = useStyles()
 
-  const { store, expanded, setExpanded, setSelectedStyle } = useContext(
-    StylesContext
-  )
+  const { store, expanded, setExpanded } = useContext(StylesContext)
 
   const handleToggle = useCallback(
     (id) => {
@@ -35,6 +36,10 @@ const StyleParts = ({ children }) => {
     },
     [expanded, setExpanded]
   )
+
+  const handleDeleteLayer = (layer) => () => {
+    store.removeLayer(layer.id)
+  }
 
   if (isEmpty(store?.layers)) {
     return (
@@ -54,14 +59,19 @@ const StyleParts = ({ children }) => {
         </ListItem>
         <Collapse in={expanded.includes(-1)} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            {store.layers.map((style, index) => (
+            {store.layers.map((layer, index) => (
               <ListItem
-                key={style.id}
+                key={layer.id}
                 button
-                onClick={() => setSelectedStyle(style)}
+                onClick={() => store.setSelectedLayer(layer)}
                 className={classes.nested}
               >
-                <ListItemText primary={style.title} />
+                <ListItemText primary={layer.title} />
+                <ListItemSecondaryAction>
+                  <IconButton size="small" onClick={handleDeleteLayer(layer)}>
+                    <DeleteIcon style={{ fontSize: "1rem" }} />
+                  </IconButton>
+                </ListItemSecondaryAction>
               </ListItem>
             ))}
           </List>

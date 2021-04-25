@@ -46,23 +46,18 @@ const EditTokenDialog = () => {
   }
 
   const initialValues = useMemo(() => {
-    console.log(data)
     if (!data) {
-      console.log("no data")
       return {
         title: "",
         value: "",
       }
     } else {
-      console.log(data.title)
       return {
         title: data.title,
         value: data.value,
       }
     }
   }, [data])
-
-  console.log(initialValues)
 
   return (
     <Formik

@@ -13,7 +13,6 @@ const ColorPicker = ({ value, onChange }) => {
   const [innerValue, setInnerValue] = useState()
 
   useEffect(() => {
-    console.log("value changed")
     setInnerValue(value.value)
   }, [value.value])
 

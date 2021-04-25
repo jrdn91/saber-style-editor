@@ -11,24 +11,7 @@ import useStyles from "./styles"
 const PropertyEditor = () => {
   const classes = useStyles()
 
-  const { selectedStyle, selectedProperty } = useContext(StylesContext)
-
-  console.log({ selectedStyle })
-
-  // const selectedPropertyObject = useMemo(() => {
-  //   if (selectedProperty === undefined) return
-  //   const propertyObject = selectedStyle?.properties?.find(
-  //     (p) => p.token === selectedProperty
-  //   )
-  //   return propertyObject
-  // }, [selectedProperty, selectedStyle])
-
-  // const canEditSelectedProperty = useMemo(() => {
-  //   if (selectedPropertyObject) {
-  //     return selectedPropertyObject.value.canEdit
-  //   }
-  //   return false
-  // }, [selectedPropertyObject])
+  const { store, selectedProperty } = useContext(StylesContext)
 
   const handleSavePropertyValue = (newValue) => {
     console.log(newValue)
@@ -46,13 +29,13 @@ const PropertyEditor = () => {
       p={3}
       position="relative"
     >
-      {!isEmpty(selectedStyle) && (
+      {!isEmpty(store?.selectedLayer) && (
         <>
           <Typography variant="h5" className={classes.title}>
-            {selectedStyle.title}
+            {store?.selectedLayer?.title}
           </Typography>
           <Box display="flex" flexDirection="column">
-            {selectedStyle.properties.map((prop) => (
+            {store?.selectedLayer?.properties?.map((prop) => (
               <PropertyInput
                 key={prop.token}
                 onColorChange={(color) => handleSetColorValue(prop, color)}

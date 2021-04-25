@@ -31,7 +31,6 @@ export const StylesContainer = ({ children }) => {
   const [styles, setStyles] = useState([])
   const [store, setStore] = useState()
   const [expanded, setExpanded] = useState([-1])
-  const [selectedStyle, setSelectedStyle] = useState() // currently selected style
   const [selectedProperty, setSelectedProperty] = useState() //currently selected property in the selectedStyle
 
   // useDeepCompareEffect(() => {
@@ -93,8 +92,6 @@ export const StylesContainer = ({ children }) => {
         updateStyleProperty,
         expanded,
         setExpanded,
-        selectedStyle,
-        setSelectedStyle,
         selectedProperty,
         setSelectedProperty,
       }}

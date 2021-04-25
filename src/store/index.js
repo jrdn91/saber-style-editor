@@ -16,12 +16,21 @@ const Store = t
   .model({
     layers: t.array(t.union(...Object.values(SaberStyles))),
     tokens: t.array(Token),
+    selectedLayer: t.maybeNull(
+      t.reference(t.union(...Object.values(SaberStyles)))
+    ),
   })
   .actions((self) => ({
+    setSelectedLayer(layer) {
+      self.selectedLayer = layer
+    },
     addLayer(layer) {
       self.layers.push(layer)
     },
     removeLayer(layerId) {
+      if (self.selectedLayer.id === layerId) {
+        self.setSelectedLayer(null)
+      }
       self.layers = self.layers.filter((l) => l.id !== layerId)
     },
     addToken(token) {
