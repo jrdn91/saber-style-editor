@@ -1,10 +1,4 @@
-import { Property } from "DataTypes/SaberStyles/BaseType"
-import BaseValue from "DataTypes/ValueTypes/BaseValue"
-import Color from "DataTypes/ValueTypes/Color"
-import { isEmpty } from "lodash"
-import { createContext, useEffect, useState } from "react"
-import useDeepCompareEffect from "use-deep-compare-effect"
-import { v4 as uuidv4 } from "uuid"
+import { createContext, useState } from "react"
 
 const StylesContext = createContext()
 export default StylesContext
