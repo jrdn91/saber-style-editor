@@ -1,3 +1,4 @@
+import Blue from "@material-ui/core/colors/blue"
 import { createMuiTheme } from "@material-ui/core/styles"
 
 const primary = {}
@@ -38,6 +39,13 @@ export default createMuiTheme({
       content: {
         "&$expanded": {
           margin: "initial",
+        },
+      },
+    },
+    MuiListItem: {
+      root: {
+        "&$selected": {
+          backgroundColor: Blue[100],
         },
       },
     },

@@ -1,5 +1,6 @@
 import Token from "DataTypes/Token"
 import Color from "DataTypes/ValueTypes/Color"
+import NumberType from "DataTypes/ValueTypes/Number"
 import Rgb from "DataTypes/ValueTypes/Rgb"
 import { types as t } from "mobx-state-tree"
 import { v4 as uuidv4 } from "uuid"
@@ -26,14 +27,15 @@ valueTypesReq.keys().forEach((x) => {
   ValueTypes[saberStyleName[1]] = valueTypesReq(x).default
 })
 
-const BaseLayerProperty = t
-  .model("BaseLayerProperty", {
+const BlastProperty = t
+  .model("BlastProperty", {
     id: t.optional(t.identifier, uuidv4()),
     title: t.optional(t.string, "Property"),
     token: t.optional(t.string, ":property:"),
     value: t.union(
       Color,
       Rgb,
+      NumberType,
       t.reference(Token),
       t.union(...Object.values(SaberStyles))
     ),
@@ -47,19 +49,35 @@ const BaseLayerProperty = t
     },
   }))
 
-const BaseLayer = t.model("BaseLayer", {
+const Blast = t.model("Blast", {
   id: t.optional(t.identifier, uuidv4()),
-  title: t.optional(t.string, "Base Layer"),
+  title: t.optional(t.string, "Blast"),
   description:
-    "This is the Base Layer for your Saber and usually holds the color for your Saber",
+    "Creates a blast effect using the color BLAST when a blast is requested. The effect is basically two humps moving out from the blast location. The size of the humps can be changed with WAVE_SIZE, note that smaller values makes the humps bigger. WAVE_MS determines how fast the waves travel. Smaller values makes the waves travel slower. Finally FADEOUT_MS determines how fast the humps fade back to the base color.",
   token: t.optional(t.string, ":layer:"),
-  properties: t.optional(t.array(BaseLayerProperty), [
-    BaseLayerProperty.create({
+  template: "BlastL<:colorA:,:fadeOutTime:,:waveSize:,:waveSpeed:>",
+  properties: t.optional(t.array(BlastProperty), [
+    BlastProperty.create({
       title: "Color A",
       token: ":colorA:",
-      value: Color.create({ value: "Blue" }),
+      value: Color.create({ value: "White" }),
+    }),
+    BlastProperty.create({
+      title: "Fade out time",
+      token: ":fadeOutTime:",
+      value: NumberType.create({ value: 200 }),
+    }),
+    BlastProperty.create({
+      title: "Wave Size",
+      token: ":waveSize:",
+      value: NumberType.create({ value: 100 }),
+    }),
+    BlastProperty.create({
+      title: "Wave Speed",
+      token: ":colorA:",
+      value: NumberType.create({ value: 400 }),
     }),
   ]),
 })
 
-export default BaseLayer
+export default Blast

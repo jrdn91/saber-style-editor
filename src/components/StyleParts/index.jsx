@@ -45,7 +45,7 @@ const StyleParts = ({ children }) => {
     return (
       <Box p={1} className={classes.styleParts}>
         <Typography>
-          Add your first style, by selecting one from the left hand menu
+          Start by adding a BaseLayer to build your Saber style off of
         </Typography>
       </Box>
     )
@@ -63,6 +63,7 @@ const StyleParts = ({ children }) => {
               <ListItem
                 key={layer.id}
                 button
+                selected={store?.selectedLayer === layer}
                 onClick={() => store.setSelectedLayer(layer)}
                 className={classes.nested}
               >
@@ -79,23 +80,6 @@ const StyleParts = ({ children }) => {
       </List>
     </Paper>
   )
-  // return (
-  //   <TreeView
-  //     className={classes.treeView}
-  //     defaultCollapseIcon={<ExpandMoreIcon />}
-  //     defaultExpandIcon={<ChevronRightIcon />}
-  //     expanded={expanded}
-  //     selected={selected}
-  //     onNodeToggle={handleToggle}
-  //     onNodeSelect={handleSelect}
-  //   >
-  //     <TreeItem nodeId="-1" label="Base Saber">
-  //       {styles.map((style, index) => (
-  //         <TreeItem key={index} nodeId={index} label={style.title} />
-  //       ))}
-  //     </TreeItem>
-  //   </TreeView>
-  // )
 }
 
 export default observer(StyleParts)

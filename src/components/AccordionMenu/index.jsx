@@ -24,8 +24,9 @@ import StylesContext from "contexts/Styles"
 import { LayerTypes, SaberStyles } from "contexts/Styles"
 import BaseLayer from "DataTypes/LayerTypes/BaseLayer"
 import { isEmpty } from "lodash"
+import { observer } from "mobx-react"
 import { getType } from "mobx-state-tree"
-import { useContext, useState } from "react"
+import { useCallback, useContext, useState } from "react"
 
 import useStyles from "./styles"
 
@@ -33,6 +34,18 @@ console.log(SaberStyles)
 
 const AccordionMenu = ({ children }) => {
   const classes = useStyles()
+
+  const [expanded, setExpanded] = useState([0, 1, 2])
+
+  const handleChange = (index) => (e, isExpanded) => {
+    setExpanded((prevValue) => {
+      if (isExpanded) {
+        return [...prevValue, index]
+      } else {
+        return prevValue.filter((v) => v !== index)
+      }
+    })
+  }
 
   const { openDialog } = useContext(AppContext)
   const { addStyle, styles, store, selectedProperty } = useContext(
@@ -76,14 +89,34 @@ const AccordionMenu = ({ children }) => {
   }
 
   const handleAddLayer = (layer) => () => {
-    console.log(layer)
+    const newLayer = LayerTypes[layer].create()
+    store.addLayer(newLayer)
   }
 
   const open = Boolean(anchorEl)
 
+  const getLayerDisabled = useCallback(
+    (layerType) => {
+      if (store?.layers?.length) {
+        return (
+          store?.layers?.find((l) => getType(l).name === layerType) !==
+          undefined
+        )
+      } else {
+        return layerType !== "BaseLayer"
+      }
+    },
+    [store?.layers]
+  )
+
   return (
     <Box className={classes.accordionMenu}>
-      <Accordion expanded square elevation={0}>
+      <Accordion
+        expanded={expanded.indexOf(0) > -1}
+        onChange={handleChange(0)}
+        square
+        elevation={0}
+      >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="layers-content"
@@ -97,10 +130,7 @@ const AccordionMenu = ({ children }) => {
               <ListItem
                 key={type}
                 button
-                disabled={
-                  store?.layers?.find((l) => getType(l).name === type) !==
-                  undefined
-                }
+                disabled={getLayerDisabled(type)}
                 onClick={handleAddLayer(type)}
               >
                 <ListItemText primary={type} />
@@ -121,7 +151,12 @@ const AccordionMenu = ({ children }) => {
           </List>
         </AccordionDetails>
       </Accordion>
-      <Accordion expanded square elevation={0}>
+      <Accordion
+        expanded={expanded.indexOf(1) > -1}
+        onChange={handleChange(1)}
+        square
+        elevation={0}
+      >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="styles-content"
@@ -132,7 +167,12 @@ const AccordionMenu = ({ children }) => {
         <AccordionDetails className={classes.accordionDetails}>
           <List dense disablePadding className={classes.list}>
             {Object.keys(SaberStyles).map((style) => (
-              <ListItem key={style} button onClick={handleAddStyle(style)}>
+              <ListItem
+                key={style}
+                button
+                disabled={store?.layers?.length === 0}
+                onClick={handleAddStyle(style)}
+              >
                 <ListItemText primary={style} />
                 <ListItemSecondaryAction
                   className={classes.listSecondaryAction}
@@ -151,7 +191,12 @@ const AccordionMenu = ({ children }) => {
           </List>
         </AccordionDetails>
       </Accordion>
-      <Accordion expanded square elevation={0}>
+      <Accordion
+        expanded={expanded.indexOf(2) > -1}
+        onChange={handleChange(2)}
+        square
+        elevation={0}
+      >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="tokens-content"
@@ -183,6 +228,7 @@ const AccordionMenu = ({ children }) => {
               <ListItem
                 key={token.id}
                 button
+                disabled={store?.layers?.length === 0}
                 onClick={handleTokenClick(token)}
                 className={classes.tokenListItem}
               >
@@ -246,4 +292,4 @@ const AccordionMenu = ({ children }) => {
   )
 }
 
-export default AccordionMenu
+export default observer(AccordionMenu)
