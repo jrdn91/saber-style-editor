@@ -8,8 +8,15 @@ const styles = makeStyles((theme) => ({
     position: "relative",
     zIndex: 1,
   },
-  nested: {
-    paddingLeft: theme.spacing(4),
+  expandIcon: {
+    transform: "rotate(-90deg)",
+    transition: theme.transitions.create("transform", {
+      duration: theme.transitions.duration.shorter,
+      easing: theme.transitions.easing.sharp,
+    }),
+  },
+  expanded: {
+    transform: "rotate(0)",
   },
 }))
 

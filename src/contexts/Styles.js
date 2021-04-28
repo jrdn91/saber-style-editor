@@ -43,6 +43,16 @@ export const StylesContainer = ({ children }) => {
   const [expanded, setExpanded] = useState([-1])
   const [selectedProperty, setSelectedProperty] = useState() //currently selected property in the selectedStyle
 
+  const toggleExpanded = (id) => {
+    setExpanded((currentExpanded) => {
+      if (expanded.includes(id)) {
+        return currentExpanded.filter((c) => c !== id)
+      } else {
+        return [...currentExpanded, id]
+      }
+    })
+  }
+
   // useDeepCompareEffect(() => {
   //   if (!isEmpty(styles)) {
   //     localStorage.setItem("styles", JSON.stringify(styles))

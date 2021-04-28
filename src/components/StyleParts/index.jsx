@@ -4,16 +4,17 @@ import {
   IconButton,
   List,
   ListItem,
+  ListItemIcon,
   ListItemSecondaryAction,
   ListItemText,
   Paper,
   Typography,
 } from "@material-ui/core"
-import ChevronRightIcon from "@material-ui/icons/ChevronRight"
 import DeleteIcon from "@material-ui/icons/Delete"
 import ExpandLessIcon from "@material-ui/icons/ExpandLess"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import { TreeItem, TreeView } from "@material-ui/lab"
+import classnames from "clsx"
 import StylesContext from "contexts/Styles"
 import { isEmpty } from "lodash"
 import { observer } from "mobx-react"
@@ -50,6 +51,62 @@ const StyleParts = ({ children }) => {
       </Box>
     )
   }
+
+  const generateListItems = (item, index = 1) => {
+    console.log("index", index)
+    const handleListItemIconClicked = () => {
+      if (item.properties) {
+        handleToggle(item.id)
+      }
+    }
+    return (
+      <>
+        <ListItem
+          key={item.id}
+          selected={store?.selectedLayer === item}
+          className={classes.nested}
+          style={{ paddingLeft: 8 * index }}
+        >
+          <ListItemIcon
+            style={{ cursor: "pointer" }}
+            onClick={handleListItemIconClicked}
+          >
+            {item.properties && (
+              <ExpandMoreIcon
+                className={classnames(classes.expandIcon, {
+                  [classes.expanded]: expanded.includes(item.id),
+                })}
+              />
+            )}
+          </ListItemIcon>
+          <ListItemText
+            style={{ cursor: "pointer" }}
+            primary={item.title}
+            onClick={() => store.setSelectedLayer(item)}
+          />
+          <ListItemSecondaryAction>
+            <IconButton size="small" onClick={handleDeleteLayer(item)}>
+              <DeleteIcon style={{ fontSize: "1rem" }} />
+            </IconButton>
+          </ListItemSecondaryAction>
+        </ListItem>
+        {item.properties && (
+          <Collapse
+            in={expanded.includes(item.id)}
+            timeout="auto"
+            unmountOnExit
+          >
+            <List component="div" disablePadding>
+              {item.properties.map((prop, innerIndex) =>
+                generateListItems(prop, index + 1)
+              )}
+            </List>
+          </Collapse>
+        )}
+      </>
+    )
+  }
+
   return (
     <Paper elevation={1} square className={classes.styleParts}>
       <List component="nav" aria-labelledby="saber-style-layer-list">
@@ -59,22 +116,7 @@ const StyleParts = ({ children }) => {
         </ListItem>
         <Collapse in={expanded.includes(-1)} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            {store.layers.map((layer, index) => (
-              <ListItem
-                key={layer.id}
-                button
-                selected={store?.selectedLayer === layer}
-                onClick={() => store.setSelectedLayer(layer)}
-                className={classes.nested}
-              >
-                <ListItemText primary={layer.title} />
-                <ListItemSecondaryAction>
-                  <IconButton size="small" onClick={handleDeleteLayer(layer)}>
-                    <DeleteIcon style={{ fontSize: "1rem" }} />
-                  </IconButton>
-                </ListItemSecondaryAction>
-              </ListItem>
-            ))}
+            {store.layers.map((layer, index) => generateListItems(layer, 2))}
           </List>
         </Collapse>
       </List>
