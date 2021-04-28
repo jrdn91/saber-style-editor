@@ -52,7 +52,7 @@ export const StylesContainer = ({ children }) => {
   useEffect(() => {
     const newStore = Store.create()
     setStore(newStore)
-    persist("Saber Style Editor", newStore, {})
+    // persist("Saber Style Editor", newStore, {})
     // const storedStyles = localStorage.getItem("styles")
     // if (storedStyles) {
     //   setStyles(JSON.parse(storedStyles))
