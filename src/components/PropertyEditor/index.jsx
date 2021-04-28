@@ -37,7 +37,7 @@ const PropertyEditor = () => {
           <Box display="flex" flexDirection="column">
             {store?.selectedLayer?.properties?.map((prop) => (
               <PropertyInput
-                key={prop.token}
+                key={prop.id}
                 onColorChange={(color) => handleSetColorValue(prop, color)}
                 property={prop}
               />
