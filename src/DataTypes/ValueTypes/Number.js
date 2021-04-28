@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid"
 
 const Number = types
   .model("Number", {
-    id: types.optional(types.identifier, uuidv4()),
+    id: types.optional(types.identifier, () => uuidv4()),
     title: types.optional(types.string, "Number"),
     description: types.optional(types.string, "A simple number value"),
     value: types.optional(types.number, 50),

@@ -29,7 +29,7 @@ valueTypesReq.keys().forEach((x) => {
 
 const BlastProperty = t
   .model("BlastProperty", {
-    id: t.optional(t.identifier, uuidv4()),
+    id: t.optional(t.identifier, () => uuidv4()),
     title: t.optional(t.string, "Property"),
     token: t.optional(t.string, ":property:"),
     value: t.union(
@@ -50,7 +50,7 @@ const BlastProperty = t
   }))
 
 const Blast = t.model("Blast", {
-  id: t.optional(t.identifier, uuidv4()),
+  id: t.optional(t.identifier, () => uuidv4()),
   title: t.optional(t.string, "Blast"),
   description:
     "Creates a blast effect using the color BLAST when a blast is requested. The effect is basically two humps moving out from the blast location. The size of the humps can be changed with WAVE_SIZE, note that smaller values makes the humps bigger. WAVE_MS determines how fast the waves travel. Smaller values makes the waves travel slower. Finally FADEOUT_MS determines how fast the humps fade back to the base color.",

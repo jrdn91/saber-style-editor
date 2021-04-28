@@ -28,7 +28,7 @@ valueTypesReq.keys().forEach((x) => {
 
 const BaseLayerProperty = t
   .model("BaseLayerProperty", {
-    id: t.optional(t.identifier, uuidv4()),
+    id: t.optional(t.identifier, () => uuidv4()),
     title: t.optional(t.string, "Property"),
     token: t.optional(t.string, ":property:"),
     value: t.union(
@@ -48,7 +48,7 @@ const BaseLayerProperty = t
   }))
 
 const BaseLayer = t.model("BaseLayer", {
-  id: t.optional(t.identifier, uuidv4()),
+  id: t.optional(t.identifier, () => uuidv4()),
   title: t.optional(t.string, "Base Layer"),
   description:
     "This is the Base Layer for your Saber and usually holds the color for your Saber",

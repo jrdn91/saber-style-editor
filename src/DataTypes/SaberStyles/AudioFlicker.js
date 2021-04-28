@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid"
 
 const AudioFlickerProperty = types
   .model("AudioFlickerProperty", {
-    id: types.optional(types.identifier, uuidv4()),
+    id: types.optional(types.identifier, () => uuidv4()),
     title: types.optional(types.string, "Property"),
     allowedValueTypes: types.optional(types.array(types.string), [""]),
     token: types.optional(types.string, ":property:"),
@@ -23,7 +23,7 @@ const AudioFlickerProperty = types
 
 const AudioFlicker = types
   .model("AudioFlicker", {
-    id: types.optional(types.identifier, uuidv4()),
+    id: types.optional(types.identifier, () => uuidv4()),
     title: types.optional(types.string, "AudioFlicker"),
     description: types.optional(
       types.string,

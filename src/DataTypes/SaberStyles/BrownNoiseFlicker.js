@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid"
 
 const BrownNoiseFlickerProperty = types
   .model("BrownNoiseFlickerProperty", {
-    id: types.optional(types.identifier, uuidv4()),
+    id: types.optional(types.identifier, () => uuidv4()),
     title: types.optional(types.string, "Property"),
     token: types.optional(types.string, ":property:"),
     value: types.union(Color, Rgb, NumberType, types.reference(Token)),
@@ -23,7 +23,7 @@ const BrownNoiseFlickerProperty = types
 
 const BrownNoiseFlicker = types
   .model("BrownNoiseFlicker", {
-    id: types.optional(types.identifier, uuidv4()),
+    id: types.optional(types.identifier, () => uuidv4()),
     title: types.optional(types.string, "BrownNoiseFlicker"),
     description: types.optional(
       types.string,

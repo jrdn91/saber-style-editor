@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid"
 
 const Color = types
   .model("Color", {
-    id: types.optional(types.identifier, uuidv4()),
+    id: types.optional(types.identifier, () => uuidv4()),
     title: types.optional(types.string, "Color"),
     description: types.optional(types.string, "A simple color value"),
     value: types.optional(types.string, "White"),
