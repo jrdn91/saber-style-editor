@@ -39,7 +39,6 @@ valueTypesReq.keys().forEach((x) => {
 })
 
 export const StylesContainer = ({ children }) => {
-  const [styles, setStyles] = useState([])
   const [store, setStore] = useState()
   const [expanded, setExpanded] = useState([-1])
   const [selectedProperty, setSelectedProperty] = useState() //currently selected property in the selectedStyle
@@ -72,35 +71,11 @@ export const StylesContainer = ({ children }) => {
     }
   }
 
-  const updateStyleProperty = (styleId, propertyToken, value) => {
-    setStyles((prevStyles) => {
-      return prevStyles.map((style) => {
-        if (style.id === styleId) {
-          return {
-            ...style,
-            properties: style.properties.map((prop) => {
-              if (prop.token === propertyToken) {
-                return {
-                  ...prop,
-                  value,
-                }
-              }
-              return prop
-            }),
-          }
-        }
-        return style
-      })
-    })
-  }
-
   return (
     <StylesContext.Provider
       value={{
         addStyle,
-        styles,
         store,
-        updateStyleProperty,
         expanded,
         setExpanded,
         selectedProperty,

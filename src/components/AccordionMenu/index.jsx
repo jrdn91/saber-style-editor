@@ -48,9 +48,7 @@ const AccordionMenu = ({ children }) => {
   }
 
   const { openDialog } = useContext(AppContext)
-  const { addStyle, styles, store, selectedProperty } = useContext(
-    StylesContext
-  )
+  const { addStyle, store, selectedProperty } = useContext(StylesContext)
 
   const handleAddStyle = (style) => (e) => {
     addStyle(style)
