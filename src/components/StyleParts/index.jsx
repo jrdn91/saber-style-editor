@@ -13,12 +13,11 @@ import {
 import DeleteIcon from "@material-ui/icons/Delete"
 import ExpandLessIcon from "@material-ui/icons/ExpandLess"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
-import { TreeItem, TreeView } from "@material-ui/lab"
 import classnames from "clsx"
 import StylesContext from "contexts/Styles"
 import { isEmpty } from "lodash"
 import { observer } from "mobx-react"
-import { useCallback, useContext, useState } from "react"
+import { useCallback, useContext } from "react"
 
 import useStyles from "./styles"
 
@@ -58,11 +57,10 @@ const StyleParts = ({ children }) => {
         handleToggle(item.id)
       }
     }
-    console.log(item.properties)
+
     return (
-      <>
+      <div key={item.id}>
         <ListItem
-          key={item.id}
           selected={store?.selectedLayer === item}
           className={classes.nested}
           style={{ paddingLeft: 8 * index }}
@@ -103,7 +101,7 @@ const StyleParts = ({ children }) => {
             </List>
           </Collapse>
         )}
-      </>
+      </div>
     )
   }
 
