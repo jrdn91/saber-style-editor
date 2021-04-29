@@ -9,10 +9,10 @@ import {
 } from "@material-ui/core"
 import { AppContext } from "contexts/App"
 import StylesContext from "contexts/Styles"
-import Token from "DataTypes/Token"
 import { Field, Formik } from "formik"
 import { TextField } from "formik-material-ui"
 import { useContext, useMemo } from "react"
+import Token from "store/models/Token"
 import * as Yup from "yup"
 
 import useStyles from "./styles"

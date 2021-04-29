@@ -7,7 +7,7 @@ export default StylesContext
 
 export const SaberStyles = {}
 const saberStylesReq = require.context(
-  "../DataTypes/SaberStyles",
+  "../store/models/SaberStyles",
   true,
   /^(.*\.(js))[^.]*$/im
 )
@@ -18,7 +18,7 @@ saberStylesReq.keys().forEach((x) => {
 
 export const LayerTypes = {}
 const layerTypesReq = require.context(
-  "../DataTypes/LayerTypes",
+  "../store/models/LayerTypes",
   true,
   /^(.*\.(js))[^.]*$/im
 )
@@ -29,7 +29,7 @@ layerTypesReq.keys().forEach((x) => {
 
 export const ValueTypes = {}
 const valueTypesReq = require.context(
-  "../DataTypes/ValueTypes",
+  "../store/models/ValueTypes",
   true,
   /^(.*\.(js))[^.]*$/im
 )

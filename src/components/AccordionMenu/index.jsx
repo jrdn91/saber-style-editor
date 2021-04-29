@@ -22,11 +22,11 @@ import InfoIcon from "@material-ui/icons/Info"
 import { AppContext } from "contexts/App"
 import StylesContext from "contexts/Styles"
 import { LayerTypes, SaberStyles } from "contexts/Styles"
-import BaseLayer from "DataTypes/LayerTypes/BaseLayer"
 import { isEmpty } from "lodash"
 import { observer } from "mobx-react"
 import { getType } from "mobx-state-tree"
 import { useCallback, useContext, useState } from "react"
+import BaseLayer from "store/models/LayerTypes/BaseLayer"
 
 import useStyles from "./styles"
 

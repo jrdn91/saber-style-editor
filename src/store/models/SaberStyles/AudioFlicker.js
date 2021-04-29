@@ -1,16 +1,16 @@
-import Token from "DataTypes/Token"
-import Color from "DataTypes/ValueTypes/Color"
-import NumberType from "DataTypes/ValueTypes/Number"
-import Rgb from "DataTypes/ValueTypes/Rgb"
 import { types } from "mobx-state-tree"
+import Token from "store/models/Token"
+import Color from "store/models/ValueTypes/Color"
+import Rgb from "store/models/ValueTypes/Rgb"
 import { v4 as uuidv4 } from "uuid"
 
-const BrownNoiseFlickerProperty = types
-  .model("BrownNoiseFlickerProperty", {
+const AudioFlickerProperty = types
+  .model("AudioFlickerProperty", {
     id: types.optional(types.identifier, () => uuidv4()),
     title: types.optional(types.string, "Property"),
+    allowedValueTypes: types.optional(types.array(types.string), [""]),
     token: types.optional(types.string, ":property:"),
-    value: types.union(Color, Rgb, NumberType, types.reference(Token)),
+    value: types.union(Color, Rgb, types.reference(Token)),
   })
   .actions((self) => ({
     updateValue(newValue) {
@@ -21,33 +21,29 @@ const BrownNoiseFlickerProperty = types
     },
   }))
 
-const BrownNoiseFlicker = types
-  .model("BrownNoiseFlicker", {
+const AudioFlicker = types
+  .model("AudioFlicker", {
     id: types.optional(types.identifier, () => uuidv4()),
-    title: types.optional(types.string, "BrownNoiseFlicker"),
+    title: types.optional(types.string, "AudioFlicker"),
     description: types.optional(
       types.string,
-      "Randomly selects between A and B, but keeps nearby pixels looking similar."
+      "Mixes between A and B based on audio. Quiet audio means more A, loud audio means more B. Based on a single sample instead of an average to make it flicker."
     ),
-    template: types.optional(
-      types.string,
-      "BrownNoiseFlicker<:colorA:,:colorB:,:grade:>"
-    ),
-    properties: types.optional(types.array(BrownNoiseFlickerProperty), [
-      BrownNoiseFlickerProperty.create({
+    template: types.optional(types.string, "AudioFlicker<:colorA:,:colorB:>"),
+    allowedValueTypes: types.optional(types.array(types.string), [
+      "Color",
+      "Rgb",
+    ]),
+    properties: types.optional(types.array(AudioFlickerProperty), [
+      AudioFlickerProperty.create({
         title: "Color A",
         token: ":colorA:",
-        value: Color.create({ value: "Green" }),
+        value: Color.create(),
       }),
-      BrownNoiseFlickerProperty.create({
+      AudioFlickerProperty.create({
         title: "Color B",
         token: ":colorB:",
-        value: Color.create({ value: "Magenta" }),
-      }),
-      BrownNoiseFlickerProperty.create({
-        title: "Grade",
-        token: ":grade:",
-        value: NumberType.create({ value: 50 }),
+        value: Color.create({ value: "Blue" }),
       }),
     ]),
   })
@@ -72,4 +68,4 @@ const BrownNoiseFlicker = types
     },
   }))
 
-export default BrownNoiseFlicker
+export default AudioFlicker

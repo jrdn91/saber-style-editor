@@ -2,10 +2,10 @@ import { Box, ClickAwayListener } from "@material-ui/core"
 import classnames from "clsx"
 import ColorPicker from "components/ColorPicker"
 import StylesContext from "contexts/Styles"
-import Rgb from "DataTypes/ValueTypes/Rgb"
 import { observer } from "mobx-react"
 import { getType } from "mobx-state-tree"
 import { useContext, useMemo } from "react"
+import Rgb from "store/models/ValueTypes/Rgb"
 
 import useStyles from "./styles"
 

@@ -1,11 +1,11 @@
-import BaseLayer from "DataTypes/LayerTypes/BaseLayer"
-import Token from "DataTypes/Token"
-import Color from "DataTypes/ValueTypes/Color"
 import { types as t } from "mobx-state-tree"
+import BaseLayer from "store/models/LayerTypes/BaseLayer"
+import Token from "store/models/Token"
+import Color from "store/models/ValueTypes/Color"
 
 export const SaberStyles = {}
 const saberStylesReq = require.context(
-  "../DataTypes/SaberStyles",
+  "../store/models/SaberStyles",
   true,
   /^(.*\.(js))[^.]*$/im
 )
@@ -16,7 +16,7 @@ saberStylesReq.keys().forEach((x) => {
 
 export const LayerTypes = {}
 const layerTypesReq = require.context(
-  "../DataTypes/LayerTypes",
+  "../store/models/LayerTypes",
   true,
   /^(.*\.(js))[^.]*$/im
 )
