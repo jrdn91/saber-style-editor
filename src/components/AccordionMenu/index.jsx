@@ -30,8 +30,6 @@ import BaseLayer from "store/models/LayerTypes/BaseLayer"
 
 import useStyles from "./styles"
 
-console.log(SaberStyles)
-
 const AccordionMenu = ({ children }) => {
   const classes = useStyles()
 
