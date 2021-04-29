@@ -53,12 +53,12 @@ const StyleParts = ({ children }) => {
   }
 
   const generateListItems = (item, index = 1) => {
-    console.log("index", index)
     const handleListItemIconClicked = () => {
       if (item.properties) {
         handleToggle(item.id)
       }
     }
+    console.log(item.properties)
     return (
       <>
         <ListItem
@@ -98,7 +98,7 @@ const StyleParts = ({ children }) => {
           >
             <List component="div" disablePadding>
               {item.properties.map((prop, innerIndex) =>
-                generateListItems(prop, index + 1)
+                generateListItems(prop, index + 2)
               )}
             </List>
           </Collapse>

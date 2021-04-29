@@ -55,7 +55,7 @@ const BaseLayer = t.model("BaseLayer", {
   token: t.optional(t.string, ":layer:"),
   properties: t.optional(t.array(BaseLayerProperty), [
     BaseLayerProperty.create({
-      title: "Color A",
+      title: "Base Color",
       token: ":colorA:",
       value: Color.create({ value: "Blue" }),
     }),

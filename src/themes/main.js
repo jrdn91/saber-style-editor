@@ -49,5 +49,10 @@ export default createMuiTheme({
         },
       },
     },
+    MuiListItemIcon: {
+      root: {
+        minWidth: 32,
+      },
+    },
   },
 })
