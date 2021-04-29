@@ -46,6 +46,9 @@ export default createMuiTheme({
       root: {
         "&$selected": {
           backgroundColor: Blue[100],
+          "&:hover": {
+            backgroundColor: Blue[100],
+          },
         },
       },
     },
