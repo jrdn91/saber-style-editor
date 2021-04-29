@@ -24,6 +24,7 @@ const BrownNoiseFlickerProperty = types
 const BrownNoiseFlicker = types
   .model("BrownNoiseFlicker", {
     id: types.optional(types.identifier, () => uuidv4()),
+    type: "Style",
     title: types.optional(types.string, "BrownNoiseFlicker"),
     description: types.optional(
       types.string,

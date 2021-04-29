@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid"
 const Token = types
   .model("Token", {
     id: types.optional(types.identifier, () => uuidv4()),
+    type: "Value",
     title: types.string,
     value: types.string,
   })

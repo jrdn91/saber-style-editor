@@ -11,6 +11,7 @@ const RgbValue = types.model({
 const Rgb = types
   .model("Rgb", {
     id: types.optional(types.identifier, () => uuidv4()),
+    type: "Value",
     title: types.optional(types.string, "Rgb"),
     description: types.optional(types.string, "A simple Rgb value"),
     value: types.optional(RgbValue, { r: 255, g: 0, b: 0, a: 1 }),
