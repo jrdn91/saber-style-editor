@@ -69,7 +69,7 @@ const StyleParts = ({ children }) => {
             style={{ cursor: "pointer" }}
             onClick={handleListItemIconClicked}
           >
-            {item.properties && (
+            {item.hasSubStyles && (
               <ExpandMoreIcon
                 className={classnames(classes.expandIcon, {
                   [classes.expanded]: expanded.includes(item.id),
@@ -88,7 +88,7 @@ const StyleParts = ({ children }) => {
             </IconButton>
           </ListItemSecondaryAction>
         </ListItem>
-        {item.properties && (
+        {item.properties && item.hasSubStyles && (
           <Collapse
             in={expanded.includes(item.id)}
             timeout="auto"

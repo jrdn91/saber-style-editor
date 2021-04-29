@@ -11,7 +11,7 @@ import { useContext, useEffect, useState } from "react"
 
 import useStyles from "./styles"
 
-const EditProperty = ({ value, open = false, onSave }) => {
+const EditProperty = ({ value, open = false }) => {
   const classes = useStyles()
 
   const { setSelectedProperty } = useContext(StylesContext)
@@ -33,8 +33,18 @@ const EditProperty = ({ value, open = false, onSave }) => {
     setSelectedProperty()
   }
 
+  const handleCollapseClick = (e) => {
+    // prevents clicking inside edit property area from triggering "outside click" functionality
+    e.preventDefault()
+    e.stopPropagation()
+  }
+
   return (
-    <Collapse in={open} className={classes.collapse}>
+    <Collapse
+      in={open}
+      className={classes.collapse}
+      onClick={handleCollapseClick}
+    >
       <Paper elevation={1} square className={classes.editProperty}>
         <Box>
           <OutlinedInput

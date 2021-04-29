@@ -2,7 +2,7 @@ import { Box, Typography } from "@material-ui/core"
 import StylesContext from "contexts/Styles"
 import { isEmpty } from "lodash"
 import { observer } from "mobx-react"
-import { useContext, useMemo } from "react"
+import { useContext } from "react"
 
 import EditProperty from "./EditProperty"
 import PropertyInput from "./PropertyInput"
@@ -11,14 +11,12 @@ import useStyles from "./styles"
 const PropertyEditor = () => {
   const classes = useStyles()
 
-  const { store, selectedProperty } = useContext(StylesContext)
+  const { store, selectedProperty, setSelectedProperty } = useContext(
+    StylesContext
+  )
 
-  const handleSavePropertyValue = (newValue) => {
-    console.log(newValue)
-  }
-
-  const handleSetColorValue = (color) => {
-    console.log(color)
+  const handleAreaClick = (e) => {
+    setSelectedProperty()
   }
 
   return (
@@ -28,6 +26,7 @@ const PropertyEditor = () => {
       bgcolor="#dadada"
       p={3}
       position="relative"
+      onClick={handleAreaClick}
     >
       {!isEmpty(store?.selectedLayer) && (
         <>
@@ -36,11 +35,7 @@ const PropertyEditor = () => {
           </Typography>
           <Box display="flex" flexDirection="column">
             {store?.selectedLayer?.properties?.map((prop) => (
-              <PropertyInput
-                key={prop.id}
-                onColorChange={(color) => handleSetColorValue(prop, color)}
-                property={prop}
-              />
+              <PropertyInput key={prop.id} property={prop} />
             ))}
           </Box>
         </>
@@ -48,7 +43,6 @@ const PropertyEditor = () => {
       <EditProperty
         open={selectedProperty?.value?.canEdit}
         value={selectedProperty?.value}
-        onSave={handleSavePropertyValue}
       />
     </Box>
   )

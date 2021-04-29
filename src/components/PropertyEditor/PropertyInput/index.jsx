@@ -1,4 +1,4 @@
-import { Box, ClickAwayListener } from "@material-ui/core"
+import { Box } from "@material-ui/core"
 import classnames from "clsx"
 import ColorPicker from "components/ColorPicker"
 import StylesContext from "contexts/Styles"
@@ -9,12 +9,15 @@ import Rgb from "store/models/ValueTypes/Rgb"
 
 import useStyles from "./styles"
 
-const PropertyInput = ({ onColorChange, property }) => {
+const PropertyInput = ({ property }) => {
   const classes = useStyles()
 
   const { selectedProperty, setSelectedProperty } = useContext(StylesContext)
 
   const handleInputClick = (e) => {
+    // prevents clicking inside property input from triggering "outside click" functionality
+    e.preventDefault()
+    e.stopPropagation()
     if (e.target.classList.contains(classes.propertyInput)) {
       setSelectedProperty(property)
     }
@@ -38,29 +41,23 @@ const PropertyInput = ({ onColorChange, property }) => {
     // property.value.update(color)
   }
 
-  const handleClickAway = () => {
-    setSelectedProperty(null)
-  }
-
   const isColorType = useMemo(() => {
     const propertyTypeName = getType(property?.value).name
     return propertyTypeName === "Color" || propertyTypeName === "Rgb"
   }, [property?.value])
 
   return (
-    <ClickAwayListener onClickAway={handleClickAway}>
-      <Box
-        className={classnames(classes.propertyInput, {
-          [classes.focused]: isSelected,
-        })}
-        onClick={handleInputClick}
-      >
-        {property?.value?.displayValue}
-        {isColorType && (
-          <ColorPicker onChange={handleColorChange} value={property?.value} />
-        )}
-      </Box>
-    </ClickAwayListener>
+    <Box
+      className={classnames(classes.propertyInput, {
+        [classes.focused]: isSelected,
+      })}
+      onClick={handleInputClick}
+    >
+      {property?.value?.displayValue}
+      {isColorType && (
+        <ColorPicker onChange={handleColorChange} value={property?.value} />
+      )}
+    </Box>
   )
 }
 
