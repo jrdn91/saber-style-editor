@@ -49,35 +49,44 @@ const BlastProperty = t
     },
   }))
 
-const Blast = t.model("Blast", {
-  id: t.optional(t.identifier, () => uuidv4()),
-  title: t.optional(t.string, "Blast"),
-  description:
-    "Creates a blast effect using the color BLAST when a blast is requested. The effect is basically two humps moving out from the blast location. The size of the humps can be changed with WAVE_SIZE, note that smaller values makes the humps bigger. WAVE_MS determines how fast the waves travel. Smaller values makes the waves travel slower. Finally FADEOUT_MS determines how fast the humps fade back to the base color.",
-  token: t.optional(t.string, ":layer:"),
-  template: "BlastL<:colorA:,:fadeOutTime:,:waveSize:,:waveSpeed:>",
-  properties: t.optional(t.array(BlastProperty), [
-    BlastProperty.create({
-      title: "Color A",
-      token: ":colorA:",
-      value: Color.create({ value: "White" }),
-    }),
-    BlastProperty.create({
-      title: "Fade out time",
-      token: ":fadeOutTime:",
-      value: NumberType.create({ value: 200 }),
-    }),
-    BlastProperty.create({
-      title: "Wave Size",
-      token: ":waveSize:",
-      value: NumberType.create({ value: 100 }),
-    }),
-    BlastProperty.create({
-      title: "Wave Speed",
-      token: ":colorA:",
-      value: NumberType.create({ value: 400 }),
-    }),
-  ]),
-})
+const Blast = t
+  .model("Blast", {
+    id: t.optional(t.identifier, () => uuidv4()),
+    title: t.optional(t.string, "Blast"),
+    description:
+      "Creates a blast effect using the color BLAST when a blast is requested. The effect is basically two humps moving out from the blast location. The size of the humps can be changed with WAVE_SIZE, note that smaller values makes the humps bigger. WAVE_MS determines how fast the waves travel. Smaller values makes the waves travel slower. Finally FADEOUT_MS determines how fast the humps fade back to the base color.",
+    token: t.optional(t.string, ":layer:"),
+    template: "BlastL<:colorA:,:fadeOutTime:,:waveSize:,:waveSpeed:>",
+    properties: t.optional(t.array(BlastProperty), [
+      BlastProperty.create({
+        title: "Color A",
+        token: ":colorA:",
+        value: Color.create({ value: "White" }),
+      }),
+      BlastProperty.create({
+        title: "Fade out time",
+        token: ":fadeOutTime:",
+        value: NumberType.create({ value: 200 }),
+      }),
+      BlastProperty.create({
+        title: "Wave Size",
+        token: ":waveSize:",
+        value: NumberType.create({ value: 100 }),
+      }),
+      BlastProperty.create({
+        title: "Wave Speed",
+        token: ":colorA:",
+        value: NumberType.create({ value: 400 }),
+      }),
+    ]),
+  })
+  .views((self) => ({
+    get hasSubStyles() {
+      return (
+        self.properties.map((p) => p.value.type).filter((v) => v === "Style")
+          ?.length > 0 || false
+      )
+    },
+  }))
 
 export default Blast

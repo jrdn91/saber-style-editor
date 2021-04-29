@@ -24,6 +24,7 @@ const AudioFlickerProperty = types
 const AudioFlicker = types
   .model("AudioFlicker", {
     id: types.optional(types.identifier, () => uuidv4()),
+    type: "Style",
     title: types.optional(types.string, "AudioFlicker"),
     description: types.optional(
       types.string,
