@@ -19,7 +19,9 @@ const EditProperty = ({ value, open = false, onSave }) => {
   const [innerValue, setInnerValue] = useState("")
 
   useEffect(() => {
-    setInnerValue(value?.displayValue)
+    if (value?.displayValue) {
+      setInnerValue(value?.displayValue)
+    }
   }, [value?.displayValue])
 
   const handleOnChange = (e) => {
