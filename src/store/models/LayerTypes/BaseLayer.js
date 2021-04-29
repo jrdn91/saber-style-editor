@@ -47,19 +47,28 @@ const BaseLayerProperty = t
     },
   }))
 
-const BaseLayer = t.model("BaseLayer", {
-  id: t.optional(t.identifier, () => uuidv4()),
-  title: t.optional(t.string, "Base Layer"),
-  description:
-    "This is the Base Layer for your Saber and usually holds the color for your Saber",
-  token: t.optional(t.string, ":layer:"),
-  properties: t.optional(t.array(BaseLayerProperty), [
-    BaseLayerProperty.create({
-      title: "Base Color",
-      token: ":colorA:",
-      value: Color.create({ value: "Blue" }),
-    }),
-  ]),
-})
+const BaseLayer = t
+  .model("BaseLayer", {
+    id: t.optional(t.identifier, () => uuidv4()),
+    title: t.optional(t.string, "Base Layer"),
+    description:
+      "This is the Base Layer for your Saber and usually holds the color for your Saber",
+    token: t.optional(t.string, ":layer:"),
+    properties: t.optional(t.array(BaseLayerProperty), [
+      BaseLayerProperty.create({
+        title: "Base Color",
+        token: ":colorA:",
+        value: Color.create({ value: "Blue" }),
+      }),
+    ]),
+  })
+  .views((self) => ({
+    get hasSubStyles() {
+      return (
+        self.properties.map((p) => p.value.type).filter((v) => v === "Style")
+          ?.length > 0 || false
+      )
+    },
+  }))
 
 export default BaseLayer
