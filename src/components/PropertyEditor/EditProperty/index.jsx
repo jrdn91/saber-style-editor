@@ -19,9 +19,7 @@ const EditProperty = ({ value, open = false }) => {
   const [innerValue, setInnerValue] = useState("")
 
   useEffect(() => {
-    if (value?.displayValue) {
-      setInnerValue(value?.displayValue)
-    }
+    setInnerValue(value?.displayValue || "")
   }, [value?.displayValue])
 
   const handleOnChange = (e) => {
@@ -61,6 +59,7 @@ const EditProperty = ({ value, open = false }) => {
           color="primary"
           variant="contained"
           onClick={handleSave}
+          disabled={innerValue === value?.displayValue || !innerValue}
         >
           Save
         </Button>
