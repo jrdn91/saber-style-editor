@@ -73,7 +73,8 @@ export const StylesContainer = ({ children }) => {
     const saberStyle = SaberStyles[style]
     try {
       const newStyle = saberStyle.create()
-      store.addLayer(newStyle)
+      selectedProperty.updateValue(newStyle)
+      // store.addLayer(newStyle)
       // setStyles((prevStyles) => [...prevStyles, newStyle])
     } catch (e) {
       console.error(e)

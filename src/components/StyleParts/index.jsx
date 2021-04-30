@@ -80,6 +80,7 @@ const StyleParts = ({ children }) => {
           <ListItemText
             style={{ cursor: "pointer" }}
             primary={item.title}
+            secondary={item?.value?.title}
             onClick={() => store.setSelectedLayer(item)}
           />
           <ListItemSecondaryAction>

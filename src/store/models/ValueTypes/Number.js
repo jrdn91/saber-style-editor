@@ -1,8 +1,10 @@
 import { types } from "mobx-state-tree"
 import { v4 as uuidv4 } from "uuid"
 
-const Number = types
-  .model("Number", {
+import { Value } from "../BaseModels"
+
+const Number = Value.named("Number")
+  .props({
     id: types.optional(types.identifier, () => uuidv4()),
     type: "Value",
     title: types.optional(types.string, "Number"),
@@ -20,9 +22,6 @@ const Number = types
   .actions((self) => ({
     update(newValue) {
       self.value = parseInt(newValue)
-    },
-    getCode() {
-      return `${self.template.replace(self.token, self.displayValue)}`
     },
   }))
 

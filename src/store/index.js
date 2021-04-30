@@ -32,12 +32,24 @@ const Store = t
     ]),
     tokens: t.array(Token),
     selectedLayer: t.maybeNull(
-      t.reference(t.union(...Object.values(LayerTypes)))
+      t.reference(
+        t.union(...Object.values(LayerTypes), ...Object.values(SaberStyles))
+      )
     ),
   })
   .actions((self) => ({
-    setSelectedLayer(layer) {
-      self.selectedLayer = layer
+    setSelectedLayer(model) {
+      if (model.type === "Layer") {
+        // passed in model is a layer so it's safe to set
+        self.selectedLayer = model
+      } else if (model.type === "Property") {
+        // passed in model is a property of a layer, so we need to set it to the value of the model
+        self.selectedLayer = model.value
+      } else {
+        console.error(
+          `model type ${model.type} is not a supported type to select`
+        )
+      }
     },
     addLayer(layer) {
       self.layers.push(layer)

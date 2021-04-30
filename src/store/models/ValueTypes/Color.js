@@ -1,8 +1,10 @@
 import { types } from "mobx-state-tree"
 import { v4 as uuidv4 } from "uuid"
 
-const Color = types
-  .model("Color", {
+import { Value } from "../BaseModels"
+
+const Color = Value.named("Color")
+  .props({
     id: types.optional(types.identifier, () => uuidv4()),
     type: "Value",
     title: types.optional(types.string, "Color"),
@@ -20,9 +22,6 @@ const Color = types
   .actions((self) => ({
     update(newValue) {
       self.value = newValue
-    },
-    getCode() {
-      return `${self.template.replace(self.token, self.displayValue)}`
     },
   }))
 

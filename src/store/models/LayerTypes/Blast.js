@@ -5,6 +5,8 @@ import NumberType from "store/models/ValueTypes/Number"
 import Rgb from "store/models/ValueTypes/Rgb"
 import { v4 as uuidv4 } from "uuid"
 
+import { Layer } from "../BaseModels"
+
 export const SaberStyles = {}
 const saberStylesReq = require.context(
   "../SaberStyles",
@@ -30,6 +32,7 @@ valueTypesReq.keys().forEach((x) => {
 const BlastProperty = t
   .model("BlastProperty", {
     id: t.optional(t.identifier, () => uuidv4()),
+    type: "Property",
     title: t.optional(t.string, "Property"),
     token: t.optional(t.string, ":property:"),
     value: t.union(
@@ -49,9 +52,10 @@ const BlastProperty = t
     },
   }))
 
-const Blast = t
-  .model("Blast", {
+const Blast = Layer.named("Blast")
+  .props({
     id: t.optional(t.identifier, () => uuidv4()),
+    type: "Layer",
     title: t.optional(t.string, "Blast"),
     description:
       "Creates a blast effect using the color BLAST when a blast is requested. The effect is basically two humps moving out from the blast location. The size of the humps can be changed with WAVE_SIZE, note that smaller values makes the humps bigger. WAVE_MS determines how fast the waves travel. Smaller values makes the waves travel slower. Finally FADEOUT_MS determines how fast the humps fade back to the base color.",
@@ -75,7 +79,7 @@ const Blast = t
       }),
       BlastProperty.create({
         title: "Wave Speed",
-        token: ":colorA:",
+        token: ":waveSpeed:",
         value: NumberType.create({ value: 400 }),
       }),
     ]),

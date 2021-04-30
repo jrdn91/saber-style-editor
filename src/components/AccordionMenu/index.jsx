@@ -166,7 +166,7 @@ const AccordionMenu = ({ children }) => {
               <ListItem
                 key={style}
                 button
-                disabled={store?.layers?.length === 0}
+                disabled={store?.layers?.length === 0 || !selectedProperty}
                 onClick={handleAddStyle(style)}
               >
                 <ListItemText primary={style} />
