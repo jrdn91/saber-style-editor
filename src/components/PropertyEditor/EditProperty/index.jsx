@@ -7,6 +7,7 @@ import {
   Paper,
 } from "@material-ui/core"
 import StylesContext from "contexts/Styles"
+import { observer } from "mobx-react"
 import { useContext, useEffect, useState } from "react"
 
 import useStyles from "./styles"
@@ -69,4 +70,4 @@ const EditProperty = ({ value, open = false, width = 0 }) => {
   )
 }
 
-export default EditProperty
+export default observer(EditProperty)

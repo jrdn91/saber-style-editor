@@ -12,7 +12,7 @@ const Color = Value.named("Color")
     value: types.optional(types.string, "White"),
     token: types.optional(types.string, ":color:"),
     template: types.optional(types.string, ":color:"),
-    canEdit: types.optional(types.boolean, true),
+    canEdit: false,
   })
   .views((self) => ({
     get displayValue() {

@@ -18,7 +18,7 @@ const ColorPicker = ({ value, onChange }) => {
     if (existingColor) {
       setInnerValue(existingColor.background)
     } else {
-      setInnerValue(value.value.toJSON())
+      setInnerValue(value.value)
     }
   }, [value.value])
 

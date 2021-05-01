@@ -9,7 +9,7 @@ const styles = makeStyles((theme) => ({
     overflow: "auto",
   },
   editOpen: {
-    marginBottom: 78,
+    paddingBottom: 78,
   },
   title: {
     marginBottom: theme.spacing(2),

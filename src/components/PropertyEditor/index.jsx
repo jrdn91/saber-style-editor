@@ -28,27 +28,27 @@ const PropertyEditor = () => {
       })}
       onClick={handleAreaClick}
     >
+      <Box p={3}>
+        {!isEmpty(store?.selectedLayer) && (
+          <>
+            <Typography variant="h5" className={classes.title}>
+              {store?.selectedLayer?.title}
+            </Typography>
+            <Box display="flex" flexDirection="column">
+              {store?.selectedLayer?.properties?.map((prop) => (
+                <PropertyInput key={prop.id} property={prop} />
+              ))}
+            </Box>
+          </>
+        )}
+      </Box>
       <AutoSizer disableHeight style={{ width: "100%" }}>
         {({ width }) => (
-          <Box p={3}>
-            {!isEmpty(store?.selectedLayer) && (
-              <>
-                <Typography variant="h5" className={classes.title}>
-                  {store?.selectedLayer?.title}
-                </Typography>
-                <Box display="flex" flexDirection="column">
-                  {store?.selectedLayer?.properties?.map((prop) => (
-                    <PropertyInput key={prop.id} property={prop} />
-                  ))}
-                </Box>
-              </>
-            )}
-            <EditProperty
-              width={width}
-              open={selectedProperty?.value?.canEdit}
-              value={selectedProperty?.value}
-            />
-          </Box>
+          <EditProperty
+            width={width}
+            open={selectedProperty?.value?.canEdit}
+            value={selectedProperty?.value}
+          />
         )}
       </AutoSizer>
     </Box>
