@@ -1,42 +1,31 @@
-import { types } from "mobx-state-tree"
+import { types as t } from "mobx-state-tree"
 import Token from "store/models/Token"
 import Color from "store/models/ValueTypes/Color"
 import NumberType from "store/models/ValueTypes/Number"
 import Rgb from "store/models/ValueTypes/Rgb"
 import { v4 as uuidv4 } from "uuid"
 
-import { Style } from "../BaseModels"
+import { Property, Style } from "../BaseModels"
 
-const BrownNoiseFlickerProperty = types
-  .model("BrownNoiseFlickerProperty", {
-    id: types.optional(types.identifier, () => uuidv4()),
-    type: "Property",
-    title: types.optional(types.string, "Property"),
-    token: types.optional(types.string, ":property:"),
-    value: types.union(Color, Rgb, NumberType, types.reference(Token)),
-  })
-  .actions((self) => ({
-    updateValue(newValue) {
-      self.value = newValue
-    },
-    getCode() {
-      return self.value.getCode()
-    },
-  }))
+const BrownNoiseFlickerProperty = Property.named(
+  "BrownNoiseFlickerProperty"
+).props({
+  value: t.union(Color, Rgb, NumberType, t.reference(Token)),
+})
 
 const BrownNoiseFlicker = Style.named("BrownNoiseFlicker").props({
-  id: types.optional(types.identifier, () => uuidv4()),
+  id: t.optional(t.identifier, () => uuidv4()),
   type: "Style",
-  title: types.optional(types.string, "BrownNoiseFlicker"),
-  description: types.optional(
-    types.string,
+  title: t.optional(t.string, "BrownNoiseFlicker"),
+  description: t.optional(
+    t.string,
     "Randomly selects between A and B, but keeps nearby pixels looking similar."
   ),
-  template: types.optional(
-    types.string,
+  template: t.optional(
+    t.string,
     "BrownNoiseFlicker<:colorA:,:colorB:,:grade:>"
   ),
-  properties: types.optional(types.array(BrownNoiseFlickerProperty), [
+  properties: t.optional(t.array(BrownNoiseFlickerProperty), [
     BrownNoiseFlickerProperty.create({
       title: "Color A",
       token: ":colorA:",

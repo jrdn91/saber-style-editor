@@ -4,7 +4,7 @@ import Color from "store/models/ValueTypes/Color"
 import Rgb from "store/models/ValueTypes/Rgb"
 import { v4 as uuidv4 } from "uuid"
 
-import { Layer } from "../BaseModels"
+import { Layer, Property } from "../BaseModels"
 
 export const SaberStyles = {}
 const saberStylesReq = require.context(
@@ -29,26 +29,18 @@ valueTypesReq.keys().forEach((x) => {
 })
 
 const BaseLayerProperty = t
-  .model("BaseLayerProperty", {
-    id: t.optional(t.identifier, () => uuidv4()),
-    type: "Property",
-    title: t.optional(t.string, "Property"),
-    token: t.optional(t.string, ":property:"),
-    value: t.union(
-      Color,
-      Rgb,
-      t.reference(Token),
-      t.union(...Object.values(SaberStyles))
-    ),
-  })
-  .actions((self) => ({
-    updateValue(newValue) {
-      self.value = newValue
-    },
-    getCode() {
-      return self.value.getCode()
-    },
-  }))
+  .compose(
+    Property,
+    t.model({
+      value: t.union(
+        Color,
+        Rgb,
+        t.reference(Token),
+        t.union(...Object.values(SaberStyles))
+      ),
+    })
+  )
+  .named("BaseLayerProperty")
 
 const BaseLayer = Layer.named("BaseLayer")
   .props({

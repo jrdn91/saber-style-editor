@@ -5,7 +5,7 @@ import NumberType from "store/models/ValueTypes/Number"
 import Rgb from "store/models/ValueTypes/Rgb"
 import { v4 as uuidv4 } from "uuid"
 
-import { Layer } from "../BaseModels"
+import { Layer, Property } from "../BaseModels"
 
 export const SaberStyles = {}
 const saberStylesReq = require.context(
@@ -29,28 +29,15 @@ valueTypesReq.keys().forEach((x) => {
   ValueTypes[saberStyleName[1]] = valueTypesReq(x).default
 })
 
-const BlastProperty = t
-  .model("BlastProperty", {
-    id: t.optional(t.identifier, () => uuidv4()),
-    type: "Property",
-    title: t.optional(t.string, "Property"),
-    token: t.optional(t.string, ":property:"),
-    value: t.union(
-      Color,
-      Rgb,
-      NumberType,
-      t.reference(Token),
-      t.union(...Object.values(SaberStyles))
-    ),
-  })
-  .actions((self) => ({
-    updateValue(newValue) {
-      self.value = newValue
-    },
-    getCode() {
-      return self.value.getCode()
-    },
-  }))
+const BlastProperty = Property.named("BlastProperty").props({
+  value: t.union(
+    Color,
+    Rgb,
+    NumberType,
+    t.reference(Token),
+    t.union(...Object.values(SaberStyles))
+  ),
+})
 
 const Blast = Layer.named("Blast")
   .props({
