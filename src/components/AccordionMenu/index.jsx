@@ -26,6 +26,7 @@ import { isEmpty } from "lodash"
 import { observer } from "mobx-react"
 import { getType } from "mobx-state-tree"
 import { useCallback, useContext, useState } from "react"
+import Colors from "store/models/Colors"
 import BaseLayer from "store/models/LayerTypes/BaseLayer"
 
 import useStyles from "./styles"
@@ -33,7 +34,7 @@ import useStyles from "./styles"
 const AccordionMenu = ({ children }) => {
   const classes = useStyles()
 
-  const [expanded, setExpanded] = useState([0, 1, 2])
+  const [expanded, setExpanded] = useState([0, 1, 3])
 
   const handleChange = (index) => (e, isExpanded) => {
     setExpanded((prevValue) => {
@@ -190,6 +191,46 @@ const AccordionMenu = ({ children }) => {
       <Accordion
         expanded={expanded.indexOf(2) > -1}
         onChange={handleChange(2)}
+        square
+        elevation={0}
+      >
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="styles-content"
+          id="styles-header"
+        >
+          <Typography className={classes.heading}>Colors</Typography>
+        </AccordionSummary>
+        <AccordionDetails className={classes.accordionDetails}>
+          <List dense disablePadding className={classes.list}>
+            {Colors.map((color) => (
+              <ListItem
+                key={color.value}
+                button
+                // disabled={store?.layers?.length === 0 || !selectedProperty}
+                // onClick={handleAddStyle(style)}
+              >
+                <ListItemText primary={color.value} />
+                <ListItemSecondaryAction
+                  className={classes.listSecondaryAction}
+                >
+                  <Box
+                    height="22px"
+                    width="22px"
+                    borderRadius="50%"
+                    bgcolor={color.background}
+                    border="2px solid #dcdcdc"
+                    style={{ cursor: "pointer" }}
+                  />
+                </ListItemSecondaryAction>
+              </ListItem>
+            ))}
+          </List>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion
+        expanded={expanded.indexOf(3) > -1}
+        onChange={handleChange(3)}
         square
         elevation={0}
       >

@@ -47,7 +47,7 @@ const ColorPicker = ({ value, onChange }) => {
           width="22px"
           borderRadius="50%"
           bgcolor={colorValue}
-          border="2px solid white"
+          border="2px solid #dcdcdc"
           style={{ cursor: "pointer" }}
         />
       </IconButton>
