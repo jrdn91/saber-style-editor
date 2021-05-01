@@ -1,4 +1,21 @@
 import { types as t } from "mobx-state-tree"
+import { v4 as uuidv4 } from "uuid"
+
+export const Property = t
+  .model("Property", {
+    id: t.optional(t.identifier, () => uuidv4()),
+    type: "Property",
+    title: t.optional(t.string, "Property"),
+    token: t.optional(t.string, ":property:"),
+  })
+  .actions((self) => ({
+    updateValue(newValue) {
+      self.value = newValue
+    },
+    getCode() {
+      return self.value.getCode()
+    },
+  }))
 
 export const Layer = t.model().actions((self) => ({
   getCode() {
