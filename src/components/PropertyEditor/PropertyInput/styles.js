@@ -11,6 +11,7 @@ const styles = makeStyles((theme) => ({
     justifyContent: "space-between",
     cursor: "pointer",
     marginBottom: theme.spacing(2),
+    minHeight: 48,
   },
   focused: {
     borderWidth: 2,
