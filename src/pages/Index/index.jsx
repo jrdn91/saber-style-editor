@@ -17,7 +17,7 @@ const Index = () => {
   return (
     <Page>
       <AppBar />
-      <Box flexGrow="1" display="flex">
+      <Box className={classes.mainPageArea}>
         <StylesContainer>
           <AccordionMenu />
           <Box display="flex" flex="1 1 auto" flexDirection="column">
@@ -25,7 +25,7 @@ const Index = () => {
             <Box flex="0 0 auto">
               <Controls />
             </Box>
-            <Box display="flex" flexGrow="1">
+            <Box display="flex" flexGrow="1" overflow="hidden">
               <StyleParts />
               <PropertyEditor />
             </Box>

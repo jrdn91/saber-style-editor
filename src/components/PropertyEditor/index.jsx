@@ -1,8 +1,10 @@
 import { Box, Typography } from "@material-ui/core"
+import classnames from "clsx"
 import StylesContext from "contexts/Styles"
 import { isEmpty } from "lodash"
 import { observer } from "mobx-react"
 import { useContext } from "react"
+import { AutoSizer } from "react-virtualized"
 
 import EditProperty from "./EditProperty"
 import PropertyInput from "./PropertyInput"
@@ -21,29 +23,34 @@ const PropertyEditor = () => {
 
   return (
     <Box
-      width="50%"
-      flex="1 1 auto"
-      bgcolor="#dadada"
-      p={3}
-      position="relative"
+      className={classnames(classes.propertyEditor, {
+        [classes.editOpen]: selectedProperty?.value?.canEdit,
+      })}
       onClick={handleAreaClick}
     >
-      {!isEmpty(store?.selectedLayer) && (
-        <>
-          <Typography variant="h5" className={classes.title}>
-            {store?.selectedLayer?.title}
-          </Typography>
-          <Box display="flex" flexDirection="column">
-            {store?.selectedLayer?.properties?.map((prop) => (
-              <PropertyInput key={prop.id} property={prop} />
-            ))}
+      <AutoSizer disableHeight style={{ width: "100%" }}>
+        {({ width }) => (
+          <Box p={3}>
+            {!isEmpty(store?.selectedLayer) && (
+              <>
+                <Typography variant="h5" className={classes.title}>
+                  {store?.selectedLayer?.title}
+                </Typography>
+                <Box display="flex" flexDirection="column">
+                  {store?.selectedLayer?.properties?.map((prop) => (
+                    <PropertyInput key={prop.id} property={prop} />
+                  ))}
+                </Box>
+              </>
+            )}
+            <EditProperty
+              width={width}
+              open={selectedProperty?.value?.canEdit}
+              value={selectedProperty?.value}
+            />
           </Box>
-        </>
-      )}
-      <EditProperty
-        open={selectedProperty?.value?.canEdit}
-        value={selectedProperty?.value}
-      />
+        )}
+      </AutoSizer>
     </Box>
   )
 }

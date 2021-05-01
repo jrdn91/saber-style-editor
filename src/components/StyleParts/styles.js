@@ -7,6 +7,7 @@ const styles = makeStyles((theme) => ({
     height: "100%",
     position: "relative",
     zIndex: 1,
+    overflow: "auto",
   },
   expandIcon: {
     transform: "rotate(-90deg)",

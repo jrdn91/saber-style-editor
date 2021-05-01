@@ -11,6 +11,7 @@ select:-webkit-autofill:focus {
 
 html, body, #root {
   height: 100%;
+  overflow: hidden;
 }
 #root {
   display: flex;

@@ -5,18 +5,7 @@ import useStyles from "./styles"
 const SaberViewer = ({ children }) => {
   const classes = useStyles()
 
-  return (
-    <Box
-      bgcolor="black"
-      color="white"
-      height="180px"
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-    >
-      Saber here
-    </Box>
-  )
+  return <Box className={classes.saberViewer}>Saber here</Box>
 }
 
 export default SaberViewer

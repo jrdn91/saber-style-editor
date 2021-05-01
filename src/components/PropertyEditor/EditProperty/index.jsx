@@ -11,7 +11,7 @@ import { useContext, useEffect, useState } from "react"
 
 import useStyles from "./styles"
 
-const EditProperty = ({ value, open = false }) => {
+const EditProperty = ({ value, open = false, width = 0 }) => {
   const classes = useStyles()
 
   const { setSelectedProperty } = useContext(StylesContext)
@@ -39,6 +39,7 @@ const EditProperty = ({ value, open = false }) => {
 
   return (
     <Collapse
+      style={{ width }}
       in={open}
       className={classes.collapse}
       onClick={handleCollapseClick}

@@ -2,10 +2,9 @@ import { makeStyles } from "@material-ui/core/styles"
 
 const styles = makeStyles((theme) => ({
   collapse: {
-    position: "absolute",
+    position: "fixed",
     bottom: 0,
-    left: 0,
-    width: "100%",
+    right: 0,
   },
   editProperty: {
     display: "flex",
