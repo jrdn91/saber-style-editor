@@ -4,6 +4,7 @@ import usePrevious from "hooks/usePrevious"
 import { observer } from "mobx-react"
 import { useCallback, useEffect, useState } from "react"
 import { ChromePicker } from "react-color"
+import Colors from "store/models/Colors"
 
 import useStyles from "./styles"
 
@@ -13,7 +14,12 @@ const ColorPicker = ({ value, onChange }) => {
   const [innerValue, setInnerValue] = useState()
 
   useEffect(() => {
-    setInnerValue(value.value)
+    const existingColor = Colors.find((c) => c.value === value.value)
+    if (existingColor) {
+      setInnerValue(existingColor.background)
+    } else {
+      setInnerValue(value.value.toJSON())
+    }
   }, [value.value])
 
   const previousInnerValue = usePrevious(innerValue)

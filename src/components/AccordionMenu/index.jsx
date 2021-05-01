@@ -47,7 +47,9 @@ const AccordionMenu = ({ children }) => {
   }
 
   const { openDialog } = useContext(AppContext)
-  const { addStyle, store, selectedProperty } = useContext(StylesContext)
+  const { addStyle, store, selectedProperty, setColor } = useContext(
+    StylesContext
+  )
 
   const handleAddStyle = (style) => (e) => {
     addStyle(style)
@@ -208,7 +210,7 @@ const AccordionMenu = ({ children }) => {
                 key={color.value}
                 button
                 // disabled={store?.layers?.length === 0 || !selectedProperty}
-                // onClick={handleAddStyle(style)}
+                onClick={() => setColor(color)}
               >
                 <ListItemText primary={color.value} />
                 <ListItemSecondaryAction

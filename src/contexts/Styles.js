@@ -1,6 +1,7 @@
 import { persist } from "mst-persist"
 import { createContext, useEffect, useState } from "react"
 import Store from "store"
+import Color from "store/models/ValueTypes/Color"
 
 const StylesContext = createContext()
 export default StylesContext
@@ -74,11 +75,19 @@ export const StylesContainer = ({ children }) => {
     try {
       const newStyle = saberStyle.create()
       selectedProperty.updateValue(newStyle)
-      // store.addLayer(newStyle)
-      // setStyles((prevStyles) => [...prevStyles, newStyle])
     } catch (e) {
       console.error(e)
       throw new Error(`Could not add style of type ${style}`)
+    }
+  }
+
+  const setColor = (color) => {
+    try {
+      const newColor = Color.create({ value: color.value })
+      selectedProperty.updateValue(newColor)
+    } catch (e) {
+      console.error(e)
+      throw new Error("Could not set color")
     }
   }
 
@@ -86,6 +95,7 @@ export const StylesContainer = ({ children }) => {
     <StylesContext.Provider
       value={{
         addStyle,
+        setColor,
         store,
         expanded,
         setExpanded,

@@ -12,6 +12,7 @@ const styles = makeStyles((theme) => ({
     cursor: "pointer",
     marginBottom: theme.spacing(2),
     minHeight: 48,
+    backgroundColor: "#fff",
   },
   focused: {
     borderWidth: 2,

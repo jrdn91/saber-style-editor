@@ -56,7 +56,6 @@ const ListItems = observer(({ item, index = 1 }) => {
 
   const isSelected = useMemo(() => {
     if (store?.selectedLayer) {
-      console.log("type", store?.selectedLayer?.type)
       if (store?.selectedLayer?.type === "Layer") {
         return store?.selectedLayer === item
       } else {
