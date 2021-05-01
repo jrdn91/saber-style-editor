@@ -123,7 +123,7 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
     "deploy:production": "yarn run build && aws s3 sync build/ s3://***",
-    "deploy:staging": "env-cmd -f .env.staging yarn run build && aws s3 sync build/ s3://staging.***",
+    "deploy:staging": "env-cmd -f .env.staging yarn run build && firebase deploy",
     "lint": "eslint --fix .",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
   },
