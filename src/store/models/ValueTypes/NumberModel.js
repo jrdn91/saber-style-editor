@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid"
 
 import { Value } from "../BaseModels"
 
-const Number = Value.named("Number")
+const NumberModel = Value.named("Number")
   .props({
     id: types.optional(types.identifier, () => uuidv4()),
     type: "Value",
@@ -16,13 +16,15 @@ const Number = Value.named("Number")
   })
   .views((self) => ({
     get displayValue() {
+      console.log(self.value)
       return self.value
     },
   }))
   .actions((self) => ({
     update(newValue) {
+      console.log(parseInt(newValue))
       self.value = parseInt(newValue)
     },
   }))
 
-export default Number
+export default NumberModel

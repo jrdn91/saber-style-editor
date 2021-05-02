@@ -1,7 +1,7 @@
 import { types as t } from "mobx-state-tree"
 import Token from "store/models/Token"
 import Color from "store/models/ValueTypes/Color"
-import NumberType from "store/models/ValueTypes/Number"
+import NumberModel from "store/models/ValueTypes/NumberModel"
 import Rgb from "store/models/ValueTypes/Rgb"
 import { v4 as uuidv4 } from "uuid"
 
@@ -33,7 +33,7 @@ const BlastProperty = Property.named("BlastProperty").props({
   value: t.union(
     Color,
     Rgb,
-    NumberType,
+    NumberModel,
     t.reference(Token),
     t.union(...Object.values(SaberStyles))
   ),
@@ -57,17 +57,17 @@ const Blast = Layer.named("Blast")
       BlastProperty.create({
         title: "Fade out time",
         token: ":fadeOutTime:",
-        value: NumberType.create({ value: 200 }),
+        value: NumberModel.create({ value: 200 }),
       }),
       BlastProperty.create({
         title: "Wave Size",
         token: ":waveSize:",
-        value: NumberType.create({ value: 100 }),
+        value: NumberModel.create({ value: 100 }),
       }),
       BlastProperty.create({
         title: "Wave Speed",
         token: ":waveSpeed:",
-        value: NumberType.create({ value: 400 }),
+        value: NumberModel.create({ value: 400 }),
       }),
     ]),
   })

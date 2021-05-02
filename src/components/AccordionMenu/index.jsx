@@ -19,6 +19,7 @@ import DeleteIcon from "@material-ui/icons/Delete"
 import EditIcon from "@material-ui/icons/Edit"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import InfoIcon from "@material-ui/icons/Info"
+import ColorDot from "components/Common/ColorDot"
 import { AppContext } from "contexts/App"
 import StylesContext from "contexts/Styles"
 import { LayerTypes, SaberStyles } from "contexts/Styles"
@@ -216,14 +217,7 @@ const AccordionMenu = ({ children }) => {
                 <ListItemSecondaryAction
                   className={classes.listSecondaryAction}
                 >
-                  <Box
-                    height="22px"
-                    width="22px"
-                    borderRadius="50%"
-                    bgcolor={color.background}
-                    border="2px solid #dcdcdc"
-                    style={{ cursor: "pointer" }}
-                  />
+                  <ColorDot color={color.background} />
                 </ListItemSecondaryAction>
               </ListItem>
             ))}
@@ -263,37 +257,60 @@ const AccordionMenu = ({ children }) => {
               </ListItemIcon>
               <ListItemText primary="Create new Token" />
             </ListItem>
-            {store?.tokens?.map((token) => (
-              <ListItem
-                key={token.id}
-                button
-                disabled={store?.layers?.length === 0}
-                onClick={handleTokenClick(token)}
-                className={classes.tokenListItem}
-              >
-                <ListItemIcon>
-                  <IconButton
-                    size="small"
-                    edge="start"
-                    aria-label="edit"
-                    onClick={handleEditToken(token)}
-                  >
-                    <EditIcon />
-                  </IconButton>
-                </ListItemIcon>
-                <ListItemText primary={token.title} secondary={token.value} />
-                <ListItemSecondaryAction>
-                  <IconButton
-                    onClick={handleConfirmDeleteToken(token)}
-                    size="small"
-                    edge="end"
-                    aria-label="delete"
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </ListItemSecondaryAction>
-              </ListItem>
-            ))}
+            {store?.tokens?.map((token) => {
+              console.log(token.toJSON())
+              return (
+                <ListItem
+                  key={token.id}
+                  button
+                  disabled={store?.layers?.length === 0}
+                  onClick={handleTokenClick(token)}
+                  className={classes.tokenListItem}
+                >
+                  <ListItemIcon>
+                    <IconButton
+                      size="small"
+                      edge="start"
+                      aria-label="edit"
+                      onClick={handleEditToken(token)}
+                    >
+                      <EditIcon />
+                    </IconButton>
+                  </ListItemIcon>
+                  <ListItemText
+                    disableTypography
+                    primary={
+                      <Typography variant="body2">{token.title}</Typography>
+                    }
+                    secondary={
+                      <div style={{ display: "flex" }}>
+                        <Typography
+                          variant="body2"
+                          color="textSecondary"
+                          style={{ marginRight: 8 }}
+                        >
+                          {token?.value?.displayValue || ""}
+                        </Typography>
+                        {(token?.value?.title === "Color" ||
+                          token?.value?.title === "Rgb") && (
+                          <ColorDot color={token?.value?.valueToString} />
+                        )}
+                      </div>
+                    }
+                  />
+                  <ListItemSecondaryAction>
+                    <IconButton
+                      onClick={handleConfirmDeleteToken(token)}
+                      size="small"
+                      edge="end"
+                      aria-label="delete"
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              )
+            })}
           </List>
         </AccordionDetails>
       </Accordion>

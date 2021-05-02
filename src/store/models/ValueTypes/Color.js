@@ -18,6 +18,10 @@ const Color = Value.named("Color")
     get displayValue() {
       return self.value
     },
+    get valueToString() {
+      // view to match rgb view value
+      return self.value
+    },
   }))
   .actions((self) => ({
     update(newValue) {

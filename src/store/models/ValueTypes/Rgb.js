@@ -25,9 +25,13 @@ const Rgb = Value.named("Rgb")
     get displayValue() {
       return `Rgb<${self.value.r},${self.value.g},${self.value.b}>`
     },
+    get valueToString() {
+      return `rgb(${self.value.r},${self.value.g},${self.value.b})`
+    },
   }))
   .actions((self) => ({
     update(newValue) {
+      console.log("newValue", newValue)
       if (typeof newValue === "string") {
         const valueParts = newValue
           .replace("Rgb<", "")
@@ -42,6 +46,9 @@ const Rgb = Value.named("Rgb")
       } else {
         self.value = newValue
       }
+    },
+    isValidRgbValue(value) {
+      return value.match(/^Rgb<[\d]{1,3},[\d]{1,3},[\d]{1,3}>$/g) !== null
     },
   }))
 

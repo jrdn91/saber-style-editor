@@ -1,7 +1,7 @@
 import { types as t } from "mobx-state-tree"
 import Token from "store/models/Token"
 import Color from "store/models/ValueTypes/Color"
-import NumberType from "store/models/ValueTypes/Number"
+import NumberModel from "store/models/ValueTypes/NumberModel"
 import Rgb from "store/models/ValueTypes/Rgb"
 import { v4 as uuidv4 } from "uuid"
 
@@ -10,7 +10,7 @@ import { Property, Style } from "../BaseModels"
 const BrownNoiseFlickerProperty = Property.named(
   "BrownNoiseFlickerProperty"
 ).props({
-  value: t.union(Color, Rgb, NumberType, t.reference(Token)),
+  value: t.union(Color, Rgb, NumberModel, t.reference(Token)),
 })
 
 const BrownNoiseFlicker = Style.named("BrownNoiseFlicker").props({
@@ -39,7 +39,7 @@ const BrownNoiseFlicker = Style.named("BrownNoiseFlicker").props({
     BrownNoiseFlickerProperty.create({
       title: "Grade",
       token: ":grade:",
-      value: NumberType.create({ value: 50 }),
+      value: NumberModel.create({ value: 50 }),
     }),
   ]),
 })

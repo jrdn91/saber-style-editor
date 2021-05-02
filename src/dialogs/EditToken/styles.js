@@ -5,6 +5,10 @@ const styles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
   },
+  select: {
+    display: "flex",
+    alignItems: "center",
+  },
 }))
 
 export default styles

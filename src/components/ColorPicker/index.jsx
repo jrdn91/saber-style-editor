@@ -1,4 +1,5 @@
 import { Box, IconButton, Popover } from "@material-ui/core"
+import ColorDot from "components/Common/ColorDot"
 import useColorValue from "hooks/useColorValue"
 import usePrevious from "hooks/usePrevious"
 import { observer } from "mobx-react"
@@ -18,9 +19,9 @@ const ColorPicker = ({ value, onChange }) => {
     if (existingColor) {
       setInnerValue(existingColor.background)
     } else {
-      setInnerValue(value.value)
+      setInnerValue(value.valueToString)
     }
-  }, [value.value])
+  }, [value.value, value.valueToString])
 
   const previousInnerValue = usePrevious(innerValue)
 
@@ -48,14 +49,7 @@ const ColorPicker = ({ value, onChange }) => {
   return (
     <>
       <IconButton size="small" onClick={handleOpenPicker}>
-        <Box
-          height="22px"
-          width="22px"
-          borderRadius="50%"
-          bgcolor={colorValue}
-          border="2px solid #dcdcdc"
-          style={{ cursor: "pointer" }}
-        />
+        <ColorDot color={colorValue} />
       </IconButton>
       <Popover
         open={open}
