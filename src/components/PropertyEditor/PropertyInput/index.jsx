@@ -28,11 +28,13 @@ const InputComponent = ({ isToken, propertyValue }) => {
     // prevents clicking inside property input from triggering "outside click" functionality
     e.preventDefault()
     e.stopPropagation()
-    if (isToken) {
-      openDialog("editToken", propertyValue)
-    } else {
-      setSelectedProperty(propertyValue)
-    }
+    setSelectedProperty(propertyValue)
+  }
+
+  const handleEditToken = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    openDialog("editToken", propertyValue)
   }
 
   const handleColorChange = (color) => {
@@ -60,7 +62,9 @@ const InputComponent = ({ isToken, propertyValue }) => {
       onClick={handleInputClick}
     >
       <Box display="flex" alignItems="center">
-        {isToken && <TokenIcon className={classes.tokenIcon} />}
+        {isToken && (
+          <TokenIcon onClick={handleEditToken} className={classes.tokenIcon} />
+        )}
         <div>
           <Typography
             variant="body2"
