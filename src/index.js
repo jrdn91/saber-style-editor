@@ -3,14 +3,13 @@ import "firebase/auth"
 
 import CssBaseline from "@material-ui/core/CssBaseline"
 import { MuiThemeProvider } from "@material-ui/core/styles"
-import { FirebaseAuthProvider } from "@react-firebase/auth"
-import { FirestoreProvider } from "@react-firebase/firestore"
 import App from "components/App"
 import firebase from "firebase/app"
 import ReactDOM from "react-dom"
 import { initDB } from "react-indexed-db"
 import { QueryClient, QueryClientProvider } from "react-query"
 import { BrowserRouter } from "react-router-dom"
+import { FirebaseAppProvider } from "reactfire"
 
 import reportWebVitals from "./reportWebVitals"
 import theme from "./themes/main"
@@ -39,7 +38,7 @@ initDB({
 })
 
 const Application = (
-  <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
+  <FirebaseAppProvider firebaseConfig={firebaseConfig}>
     <BrowserRouter>
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
@@ -48,7 +47,7 @@ const Application = (
         </QueryClientProvider>
       </MuiThemeProvider>
     </BrowserRouter>
-  </FirebaseAuthProvider>
+  </FirebaseAppProvider>
 )
 
 ReactDOM.render(Application, document.getElementById("root"))
