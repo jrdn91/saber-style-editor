@@ -49,7 +49,10 @@ const PropertyEditor = () => {
           {({ width }) => (
             <EditProperty
               width={width}
-              open={selectedProperty?.value?.canEdit}
+              open={
+                selectedProperty?.type !== "Token" &&
+                selectedProperty?.value?.canEdit
+              }
               value={selectedProperty?.value}
             />
           )}
