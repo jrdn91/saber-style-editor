@@ -8,7 +8,12 @@ import useStyles from "./styles"
 const ColorDot = ({ color }) => {
   const dotColor = useMemo(() => {
     if (!isEmpty(color)) {
-      return Color(color.toLowerCase()).fade(0.6).string()
+      const colorProp = Color(color.toLowerCase())
+      if (colorProp.isLight) {
+        return colorProp.darken(0.6).fade(0.8).string()
+      } else {
+        return colorProp.fade(0.6).string()
+      }
     }
     return ""
   }, [color])

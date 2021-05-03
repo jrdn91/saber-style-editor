@@ -28,12 +28,10 @@ const InputComponent = ({ isToken, propertyValue }) => {
     // prevents clicking inside property input from triggering "outside click" functionality
     e.preventDefault()
     e.stopPropagation()
-    if (e.target.classList.contains(classes.propertyInput)) {
-      if (isToken) {
-        openDialog("editToken", propertyValue)
-      } else {
-        setSelectedProperty(propertyValue)
-      }
+    if (isToken) {
+      openDialog("editToken", propertyValue)
+    } else {
+      setSelectedProperty(propertyValue)
     }
   }
 

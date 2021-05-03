@@ -28,6 +28,8 @@ const ColorPicker = ({ value, onChange, disabled = false }) => {
   const [anchorEl, setAnchorEl] = useState(null)
 
   const handleOpenPicker = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
     setAnchorEl(e.currentTarget)
   }
 
