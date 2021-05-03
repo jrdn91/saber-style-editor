@@ -3,6 +3,7 @@ import { ReactComponent as TokenIcon } from "assets/icons/token-icon.svg"
 import classnames from "clsx"
 import ColorPicker from "components/ColorPicker"
 import ErrorFallback from "components/Common/ErrorFallback"
+import { AppContext } from "contexts/App"
 import StylesContext from "contexts/Styles"
 import { observer } from "mobx-react"
 import { getType } from "mobx-state-tree"
@@ -15,6 +16,7 @@ import useStyles from "./styles"
 const InputComponent = ({ isToken, propertyValue }) => {
   const classes = useStyles()
 
+  const { openDialog } = useContext(AppContext)
   const { selectedProperty, setSelectedProperty } = useContext(StylesContext)
 
   const isSelected = useMemo(() => {
@@ -27,7 +29,11 @@ const InputComponent = ({ isToken, propertyValue }) => {
     e.preventDefault()
     e.stopPropagation()
     if (e.target.classList.contains(classes.propertyInput)) {
-      setSelectedProperty(propertyValue)
+      if (isToken) {
+        openDialog("editToken", propertyValue)
+      } else {
+        setSelectedProperty(propertyValue)
+      }
     }
   }
 
@@ -81,6 +87,7 @@ const InputComponent = ({ isToken, propertyValue }) => {
         <ColorPicker
           onChange={handleColorChange}
           value={propertyValue?.value}
+          disabled={isToken}
         />
       )}
     </Box>

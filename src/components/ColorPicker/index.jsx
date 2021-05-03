@@ -9,7 +9,7 @@ import Colors from "store/models/Colors"
 
 import useStyles from "./styles"
 
-const ColorPicker = ({ value, onChange }) => {
+const ColorPicker = ({ value, onChange, disabled = false }) => {
   const classes = useStyles()
 
   const [innerValue, setInnerValue] = useState()
@@ -48,7 +48,7 @@ const ColorPicker = ({ value, onChange }) => {
 
   return (
     <>
-      <IconButton size="small" onClick={handleOpenPicker}>
+      <IconButton size="small" disabled={disabled} onClick={handleOpenPicker}>
         <ColorDot color={colorValue} />
       </IconButton>
       <Popover
