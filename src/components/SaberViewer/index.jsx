@@ -5,7 +5,7 @@ import useStyles from "./styles"
 const SaberViewer = ({ children }) => {
   const classes = useStyles()
 
-  return <Box className={classes.saberViewer}>Saber here</Box>
+  return <Box className={classes.saberViewer}>Saber preview (Coming Soon)</Box>
 }
 
 export default SaberViewer
