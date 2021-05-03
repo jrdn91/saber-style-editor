@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles"
 const styles = makeStyles((theme) => ({
   propertyInput: {
     borderRadius: theme.shape.borderRadius,
-    padding: "9px 17px",
+    padding: "0 17px",
     border: `1px solid ${theme.palette.divider}`,
     width: "100%",
     display: "flex",
@@ -18,6 +18,12 @@ const styles = makeStyles((theme) => ({
     borderWidth: 2,
     padding: "8px 16px",
     borderColor: theme.palette.primary.main,
+  },
+  tokenIcon: {
+    height: 24,
+    marginRight: theme.spacing(1),
+    fill: theme.palette.primary.main,
+    marginLeft: -6,
   },
 }))
 
