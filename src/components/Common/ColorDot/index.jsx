@@ -1,15 +1,24 @@
 import { Box } from "@material-ui/core"
+import Color from "color"
+import { isEmpty } from "lodash"
+import { useMemo } from "react"
 
 import useStyles from "./styles"
 
 const ColorDot = ({ color }) => {
+  const dotColor = useMemo(() => {
+    if (!isEmpty(color)) {
+      return Color(color.toLowerCase()).fade(0.6).string()
+    }
+    return ""
+  }, [color])
   return (
     <Box
       height="22px"
       width="22px"
       borderRadius="50%"
       bgcolor={color}
-      border="2px solid #dcdcdc"
+      boxShadow={`0px 3px 3px -2px ${dotColor}, 0px 3px 4px 0px ${dotColor}, 0px 1px 8px 0px ${dotColor}`}
       style={{ cursor: "pointer" }}
     />
   )
