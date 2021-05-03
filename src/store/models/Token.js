@@ -8,7 +8,7 @@ import Rgb from "./ValueTypes/Rgb"
 const Token = t
   .model("Token", {
     id: t.optional(t.identifier, () => uuidv4()),
-    type: "Value",
+    type: "Token",
     title: t.string,
     value: t.union(Rgb, Color, NumberModel),
   })
