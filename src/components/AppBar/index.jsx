@@ -8,20 +8,21 @@ import useStyles from "./styles"
 const AppBar = ({ children }) => {
   const classes = useStyles()
 
-  const { firebaseAuth } = useContext(AppContext)
+  // const { firebaseAuth } = useContext(AppContext)
 
-  const handleSignInWithGoogle = () => {
-    if (!firebaseAuth?.isSignedIn) {
-      const googleAuthProvider = new firebase.auth.GoogleAuthProvider()
-      firebase.auth().signInWithPopup(googleAuthProvider)
-    } else {
-      firebase.auth().signOut()
-    }
-  }
+  // const handleSignInWithGoogle = () => {
+  //   if (!firebaseAuth?.isSignedIn) {
+  //     const googleAuthProvider = new firebase.auth.GoogleAuthProvider()
+  //     firebase.auth().signInWithPopup(googleAuthProvider)
+  //   } else {
+  //     firebase.auth().signOut()
+  //   }
+  // }
 
   return (
     <MuiAppBar className={classes.appBar} position="static" color="default">
       <Toolbar variant="dense" disableGutters className={classes.toolbar}>
+        {/*
         <Button
           size="small"
           variant="contained"
@@ -30,6 +31,7 @@ const AppBar = ({ children }) => {
         >
           {firebaseAuth?.isSignedIn ? "Sign Out" : "Sign In"}
         </Button>
+        */}
       </Toolbar>
     </MuiAppBar>
   )
