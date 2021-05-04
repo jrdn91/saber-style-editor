@@ -2,34 +2,45 @@ import C from "color"
 import { getParent, onPatch, types as t } from "mobx-state-tree"
 import { v4 as uuidv4 } from "uuid"
 
+import Colors from "./Colors"
 import Color from "./ValueTypes/Color"
 import NumberModel from "./ValueTypes/NumberModel"
 import Rgb from "./ValueTypes/Rgb"
 
 const handleComposition = (composedToken, self) => {
   if (composedToken) {
+    let colorValue
     if (composedToken.value.title === "Rgb") {
+      // set color value to rgb vaue
       const { a, ...rgb } = composedToken.value.value
-      const composedTokenColor = C(rgb)
-      let newColorValue
-      if (self.composition_type === "lighten") {
-        newColorValue = composedTokenColor
-          .lighten(self.composition_value)
-          .rgb()
-          .object()
-      } else if (self.composition_type === "darken") {
-        newColorValue = composedTokenColor
-          .darken(self.composition_value)
-          .rgb()
-          .object()
-      }
-      self.value.update({
-        r: parseInt(newColorValue.r),
-        g: parseInt(newColorValue.g),
-        b: parseInt(newColorValue.b),
-        a: 1,
-      })
+      colorValue = rgb
+    } else if (composedToken.value.title === "Color") {
+      // set color value to color value
+      const composedTokenColorObject = Colors.find(
+        (c) => c.value === composedToken.value.value
+      )
+      colorValue = composedTokenColorObject.background
     }
+
+    const composedTokenColor = C(colorValue)
+    let newColorValue
+    if (self.composition_type === "lighten") {
+      newColorValue = composedTokenColor
+        .lighten(self.composition_value)
+        .rgb()
+        .object()
+    } else if (self.composition_type === "darken") {
+      newColorValue = composedTokenColor
+        .darken(self.composition_value)
+        .rgb()
+        .object()
+    }
+    self.value.update({
+      r: parseInt(newColorValue.r),
+      g: parseInt(newColorValue.g),
+      b: parseInt(newColorValue.b),
+      a: 1,
+    })
   }
 }
 

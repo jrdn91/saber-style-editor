@@ -2,6 +2,7 @@ import { types } from "mobx-state-tree"
 import { v4 as uuidv4 } from "uuid"
 
 import { Value } from "../BaseModels"
+import Colors from "../Colors"
 
 const Color = Value.named("Color")
   .props({
@@ -20,7 +21,8 @@ const Color = Value.named("Color")
     },
     get valueToString() {
       // view to match rgb view value
-      return self.value
+      const colorObject = Colors.find((c) => c.value === self.value)
+      return colorObject?.background || self.value
     },
   }))
   .actions((self) => ({
