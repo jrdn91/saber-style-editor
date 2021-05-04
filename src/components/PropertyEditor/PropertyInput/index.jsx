@@ -13,7 +13,7 @@ import Rgb from "store/models/ValueTypes/Rgb"
 
 import useStyles from "./styles"
 
-const InputComponent = ({ isToken, propertyValue }) => {
+const InputComponent = ({ isToken, property, propertyValue }) => {
   const classes = useStyles()
 
   const { openDialog } = useContext(AppContext)
@@ -21,14 +21,14 @@ const InputComponent = ({ isToken, propertyValue }) => {
 
   const isSelected = useMemo(() => {
     if (selectedProperty === undefined) return
-    return selectedProperty === propertyValue
-  }, [selectedProperty, propertyValue])
+    return selectedProperty === property
+  }, [selectedProperty, property])
 
   const handleInputClick = (e) => {
     // prevents clicking inside property input from triggering "outside click" functionality
     e.preventDefault()
     e.stopPropagation()
-    setSelectedProperty(propertyValue)
+    setSelectedProperty(property)
   }
 
   const handleEditToken = (e) => {
@@ -106,6 +106,7 @@ const PropertyInput = ({ property }) => {
     <ErrorBoundary FallbackComponent={ErrorFallback}>
       <InputComponent
         isToken={isToken}
+        property={property}
         propertyValue={isToken ? property?.value : property}
       />
     </ErrorBoundary>
