@@ -1,6 +1,7 @@
 import { IconButton, Paper, Toolbar, Tooltip } from "@material-ui/core"
 import CodeIcon from "@material-ui/icons/Code"
 import FileCopyIcon from "@material-ui/icons/FileCopy"
+import { AppContext } from "contexts/App"
 import StylesContext from "contexts/Styles"
 import { observer } from "mobx-react"
 import { useContext } from "react"
@@ -10,11 +11,12 @@ import useStyles from "./styles"
 const Controls = ({ children }) => {
   const classes = useStyles()
 
+  const { openDialog } = useContext(AppContext)
   const { store } = useContext(StylesContext)
 
   const handleCopyCode = () => {
     const compiledCode = store.getCode()
-    console.log(compiledCode)
+    openDialog("copyCode", { code: compiledCode })
   }
 
   return (
