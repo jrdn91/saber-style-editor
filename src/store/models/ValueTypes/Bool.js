@@ -25,6 +25,12 @@ const Bool = Value.named("Bool")
       console.log(parseInt(newValue))
       self.value = parseInt(newValue)
     },
+    getCode() {
+      return `${self.template.replace(
+        self.token,
+        self.value === false ? 0 : 1
+      )}`
+    },
   }))
 
 export default Bool
