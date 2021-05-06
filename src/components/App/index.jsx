@@ -1,5 +1,6 @@
 import Snackbar from "components/Snackbar"
 import { AppContainer } from "contexts/App"
+import CopyCodeDialog from "dialogs/CopyCode"
 import { withRouter } from "react-router"
 import Router, { routeConfig } from "router"
 
@@ -13,6 +14,7 @@ const App = () => {
       <Router routes={routeConfig} />
       <div id="dialog-holder">
         {/* LEAVE THIS IN PLACE FOR DIALOGS TO POPULATE INTO */}
+        <CopyCodeDialog />
       </div>
       <Snackbar />
     </AppContainer>
