@@ -12,7 +12,7 @@ import EditProperty from "./EditProperty"
 import PropertyInput from "./PropertyInput"
 import useStyles from "./styles"
 
-const PropertyEditor = () => {
+const PropertyArea = () => {
   const classes = useStyles()
 
   const { store, selectedProperty, setSelectedProperty } = useContext(
@@ -25,7 +25,7 @@ const PropertyEditor = () => {
 
   return (
     <Box
-      className={classnames(classes.propertyEditor, {
+      className={classnames(classes.propertyArea, {
         [classes.editOpen]: selectedProperty?.value?.canEdit,
       })}
       onClick={handleAreaClick}
@@ -62,4 +62,4 @@ const PropertyEditor = () => {
   )
 }
 
-export default observer(PropertyEditor)
+export default observer(PropertyArea)

@@ -2,7 +2,7 @@ import { Box } from "@material-ui/core"
 import AccordionMenu from "components/AccordionMenu"
 import AppBar from "components/AppBar"
 import Controls from "components/Controls"
-import PropertyEditor from "components/PropertyEditor"
+import PropertyArea from "components/PropertyArea"
 import SaberViewer from "components/SaberViewer"
 import StyleListArea from "components/StyleListArea"
 import { StylesContainer } from "contexts/Styles"
@@ -27,7 +27,7 @@ const Index = () => {
             </Box>
             <Box display="flex" flexGrow="1" overflow="hidden">
               <StyleListArea />
-              <PropertyEditor />
+              <PropertyArea />
             </Box>
           </Box>
           <EditTokenDialog />
