@@ -25,6 +25,17 @@ layerTypesReq.keys().forEach((x) => {
   LayerTypes[saberStyleName[1]] = layerTypesReq(x).default
 })
 
+export const Functions = {}
+const functionsReq = require.context(
+  "../store/models/Functions",
+  true,
+  /^(.*\.(js))[^.]*$/im
+)
+functionsReq.keys().forEach((x) => {
+  const functionName = x.match(/\.\/([A-Za-z]+).js/)
+  Functions[functionName[1]] = functionsReq(x).default
+})
+
 const Store = t
   .model({
     layers: t.optional(t.array(t.union(...Object.values(LayerTypes))), [
@@ -33,7 +44,11 @@ const Store = t
     tokens: t.array(Token),
     selectedLayer: t.maybeNull(
       t.reference(
-        t.union(...Object.values(LayerTypes), ...Object.values(SaberStyles))
+        t.union(
+          ...Object.values(LayerTypes),
+          ...Object.values(SaberStyles),
+          ...Object.values(Functions)
+        )
       )
     ),
   })

@@ -72,11 +72,8 @@ const Blast = Layer.named("Blast")
     ]),
   })
   .views((self) => ({
-    get hasSubStyles() {
-      return (
-        self.properties.map((p) => p.value.type).filter((v) => v === "Style")
-          ?.length > 0 || false
-      )
+    get subLayers() {
+      return self.properties.filter((p) => p.value.type === "Style")
     },
   }))
 
