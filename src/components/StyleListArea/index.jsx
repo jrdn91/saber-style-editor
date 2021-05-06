@@ -110,7 +110,7 @@ const ListItems = observer(({ item, index = 1 }) => {
   )
 })
 
-const StyleParts = ({ children }) => {
+const StyleListArea = ({ children }) => {
   const classes = useStyles()
 
   const { store, expanded, setExpanded } = useContext(StylesContext)
@@ -128,7 +128,7 @@ const StyleParts = ({ children }) => {
 
   if (isEmpty(store?.layers)) {
     return (
-      <Box p={1} className={classes.styleParts}>
+      <Box p={1} className={classes.styleListArea}>
         <Typography>
           Start by adding a BaseLayer to build your Saber style off of
         </Typography>
@@ -137,7 +137,7 @@ const StyleParts = ({ children }) => {
   }
 
   return (
-    <Paper elevation={1} square className={classes.styleParts}>
+    <Paper elevation={1} square className={classes.styleListArea}>
       <List component="nav" aria-labelledby="saber-style-layer-list">
         <ListItem button onClick={() => handleToggle(-1)}>
           <ListItemText primary="Base Saber" />
@@ -155,4 +155,4 @@ const StyleParts = ({ children }) => {
   )
 }
 
-export default observer(StyleParts)
+export default observer(StyleListArea)

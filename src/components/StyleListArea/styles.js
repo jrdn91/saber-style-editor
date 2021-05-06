@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles"
 
 const styles = makeStyles((theme) => ({
-  styleParts: {
+  styleListArea: {
     width: "50%",
     flex: "1 1 auto",
     height: "100%",
