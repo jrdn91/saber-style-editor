@@ -8,11 +8,12 @@ import {
   Typography,
 } from "@material-ui/core"
 import { AppContext } from "contexts/App"
-import { useContext } from "react"
+import { useContext, useRef } from "react"
 
 import useStyles from "./styles"
 
 const CopyCodeDialog = () => {
+  const textFieldRef = useRef()
   const classes = useStyles()
 
   const { dialogs, closeDialog, openSnackBar } = useContext(AppContext)
@@ -30,6 +31,12 @@ const CopyCodeDialog = () => {
         message: "Style has been copied to your clipboard",
       })
     }
+    try {
+      textFieldRef.current.focus()
+      textFieldRef.current.select()
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   return (
@@ -37,6 +44,9 @@ const CopyCodeDialog = () => {
       <DialogTitle>Copy Code</DialogTitle>
       <DialogContent>
         <TextField
+          inputProps={{
+            ref: textFieldRef,
+          }}
           label="Saber Style Code"
           name="saber-code"
           fullWidth
