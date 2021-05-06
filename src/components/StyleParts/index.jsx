@@ -77,7 +77,7 @@ const ListItems = observer(({ item, index = 1 }) => {
           style={{ cursor: "pointer" }}
           onClick={handleListItemIconClicked}
         >
-          {item.hasSubStyles && (
+          {item?.subLayers?.length > 0 && (
             <ExpandMoreIcon
               className={classnames(classes.expandIcon, {
                 [classes.expanded]: expanded.includes(item.id),
@@ -97,11 +97,11 @@ const ListItems = observer(({ item, index = 1 }) => {
           </IconButton>
         </ListItemSecondaryAction>
       </ListItem>
-      {item.properties && item.hasSubStyles && (
+      {item.properties && item?.subLayers?.length > 0 && (
         <Collapse in={expanded.includes(item.id)} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            {item.properties.map((prop, innerIndex) => (
-              <ListItems key={prop.id} item={prop} index={index + 2} />
+            {item.subLayers.map((sub, innerIndex) => (
+              <ListItems key={sub.id} item={sub} index={index + 2} />
             ))}
           </List>
         </Collapse>
