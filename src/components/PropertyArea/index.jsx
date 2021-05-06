@@ -8,8 +8,8 @@ import { useContext } from "react"
 import { ErrorBoundary } from "react-error-boundary"
 import { AutoSizer } from "react-virtualized"
 
-import EditProperty from "./EditProperty"
 import PropertyInput from "./PropertyInput"
+import PropertyItem from "./PropertyItem"
 import useStyles from "./styles"
 
 const PropertyArea = () => {
@@ -39,7 +39,7 @@ const PropertyArea = () => {
               </Typography>
               <Box display="flex" flexDirection="column">
                 {store?.selectedLayer?.properties?.map((prop) => (
-                  <PropertyInput key={prop.id} property={prop} />
+                  <PropertyItem key={prop.id} property={prop} />
                 ))}
               </Box>
             </>
@@ -47,7 +47,7 @@ const PropertyArea = () => {
         </Box>
         <AutoSizer disableHeight style={{ width: "100%" }}>
           {({ width }) => (
-            <EditProperty
+            <PropertyInput
               width={width}
               open={
                 selectedProperty?.type !== "Token" &&
