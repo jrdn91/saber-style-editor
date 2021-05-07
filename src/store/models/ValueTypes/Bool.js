@@ -17,7 +17,7 @@ const Bool = Value.named("Bool")
   .views((self) => ({
     get displayValue() {
       console.log(self.value)
-      return self.value
+      return self.value ? "True" : "False"
     },
   }))
   .actions((self) => ({

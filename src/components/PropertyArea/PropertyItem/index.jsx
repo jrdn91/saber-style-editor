@@ -1,5 +1,4 @@
 import { Box, Typography } from "@material-ui/core"
-import { ReactComponent as TokenIcon } from "assets/icons/token-icon.svg"
 import classnames from "clsx"
 import ColorPicker from "components/ColorPicker"
 import ErrorFallback from "components/Common/ErrorFallback"
@@ -11,13 +10,26 @@ import { useContext, useMemo } from "react"
 import { ErrorBoundary } from "react-error-boundary"
 import Rgb from "store/models/ValueTypes/Rgb"
 
+import Function from "./Function"
 import useStyles from "./styles"
+import Token from "./Token"
+import Value from "./Value"
 
-const InputComponent = ({ isToken, property, propertyValue }) => {
+const PropertyTypes = {
+  Value,
+  Token,
+  Function,
+}
+
+const PropertyItem = ({ property }) => {
   const classes = useStyles()
 
-  const { openDialog } = useContext(AppContext)
   const { selectedProperty, setSelectedProperty } = useContext(StylesContext)
+
+  const isToken = useMemo(() => {
+    const propertyTypeName = getType(property?.value).name
+    return propertyTypeName === "Token"
+  }, [property?.value])
 
   const isSelected = useMemo(() => {
     if (selectedProperty === undefined) return
@@ -25,90 +37,28 @@ const InputComponent = ({ isToken, property, propertyValue }) => {
   }, [selectedProperty, property])
 
   const handleInputClick = (e) => {
-    // prevents clicking inside property input from triggering "outside click" functionality
     e.preventDefault()
     e.stopPropagation()
     setSelectedProperty(property)
   }
 
-  const handleEditToken = (e) => {
-    e.preventDefault()
-    e.stopPropagation()
-    openDialog("editToken", propertyValue)
-  }
-
-  const handleColorChange = (color) => {
-    if (propertyValue.value.title === "Color") {
-      // if is color, change to Rgb
-      const rgbColor = Rgb.create({
-        value: color,
-      })
-      propertyValue.updateValue(rgbColor)
-    } else {
-      propertyValue.value.update(color)
-    }
-  }
-
-  const isColorType = useMemo(() => {
-    const propertyTypeName = getType(propertyValue?.value).name
-    return propertyTypeName === "Color" || propertyTypeName === "Rgb"
-  }, [propertyValue?.value])
-
-  return (
-    <Box
-      className={classnames(classes.propertyItem, {
-        [classes.focused]: isSelected,
-      })}
-      onClick={handleInputClick}
-    >
-      <Box display="flex" alignItems="center">
-        {isToken && (
-          <TokenIcon onClick={handleEditToken} className={classes.tokenIcon} />
-        )}
-        <div>
-          <Typography
-            variant="body2"
-            style={{ fontSize: "0.8rem", lineHeight: "1rem" }}
-          >
-            {isToken
-              ? propertyValue?.title
-              : propertyValue?.value?.displayValue}
-          </Typography>
-          {isToken && (
-            <Typography
-              variant="body2"
-              color="textSecondary"
-              style={{ fontSize: "0.8rem", lineHeight: "1rem" }}
-            >
-              {propertyValue?.value?.displayValue}
-            </Typography>
-          )}
-        </div>
-      </Box>
-      {isColorType && (
-        <ColorPicker
-          onChange={handleColorChange}
-          value={propertyValue?.value}
-          disabled={isToken}
-        />
-      )}
-    </Box>
-  )
-}
-
-const PropertyItem = ({ property }) => {
-  const isToken = useMemo(() => {
-    const propertyTypeName = getType(property?.value).name
-    return propertyTypeName === "Token"
-  }, [property?.value])
+  const ContentComponent = PropertyTypes[property?.value?.type] || null
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <InputComponent
-        isToken={isToken}
-        property={property}
-        propertyValue={isToken ? property?.value : property}
-      />
+      <Typography variant="body2" style={{ marginBottom: 4 }}>
+        {property?.title}
+      </Typography>
+      <Box
+        className={classnames(classes.propertyItem, {
+          [classes.focused]: isSelected,
+        })}
+        onClick={handleInputClick}
+      >
+        {ContentComponent && (
+          <ContentComponent propertyValue={property?.value} isToken={isToken} />
+        )}
+      </Box>
     </ErrorBoundary>
   )
 }

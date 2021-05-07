@@ -25,6 +25,16 @@ const styles = makeStyles((theme) => ({
     fill: theme.palette.primary.main,
     marginLeft: -6,
   },
+  functionIcon: {
+    height: 20,
+    marginRight: theme.spacing(1),
+    fill: theme.palette.primary.main,
+    marginLeft: -6,
+  },
+  text: {
+    fontSize: "0.8rem",
+    lineHeight: "1rem",
+  },
 }))
 
 export default styles
