@@ -10,6 +10,7 @@ import { useContext, useMemo } from "react"
 import { ErrorBoundary } from "react-error-boundary"
 import Rgb from "store/models/ValueTypes/Rgb"
 
+import Effect from "./Effect"
 import Function from "./Function"
 import useStyles from "./styles"
 import Token from "./Token"
@@ -19,6 +20,7 @@ const PropertyTypes = {
   Value,
   Token,
   Function,
+  Effect,
 }
 
 const PropertyItem = ({ property }) => {

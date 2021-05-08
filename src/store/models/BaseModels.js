@@ -54,3 +54,17 @@ export const Value = t.model().actions((self) => ({
     return `${self.template.replace(self.token, self.displayValue)}`
   },
 }))
+
+export const Effect = t
+  .model("Effect", {
+    id: t.optional(t.identifier, () => uuidv4()),
+    type: "Effect",
+    title: t.optional(t.string, "EFFECT"),
+    token: ":effect:",
+    template: ":effect:",
+  })
+  .actions((self) => ({
+    getCode() {
+      return self.value.getCode()
+    },
+  }))
