@@ -14,7 +14,6 @@ export const Property = t
   }))
   .actions((self) => ({
     afterCreate() {
-      console.log("afterCreated")
       self.initialValue = getSnapshot(self).value
     },
     updateValue(newValue) {
@@ -47,7 +46,6 @@ export const Layer = t.model().actions((self) => ({
             // templify(property)
             return property.getCode()
           } else {
-            // templateString = templateString.replace(property.token, "")
             return ""
           }
         }
