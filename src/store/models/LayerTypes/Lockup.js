@@ -1,4 +1,3 @@
-import { deepCopy } from "lodash"
 import { types as t } from "mobx-state-tree"
 import Token from "store/models/Token"
 import Color from "store/models/ValueTypes/Color"
@@ -7,7 +6,7 @@ import Rgb from "store/models/ValueTypes/Rgb"
 import { v4 as uuidv4 } from "uuid"
 
 import { Layer, Property } from "../BaseModels"
-import AudioFlicker, { AudioFlickerProperty } from "../SaberStyles/AudioFlicker"
+import AudioFlicker from "../SaberStyles/AudioFlicker"
 
 const SaberStyles = {}
 const saberStylesReq = require.context(
