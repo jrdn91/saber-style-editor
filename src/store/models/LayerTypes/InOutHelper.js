@@ -62,11 +62,12 @@ const InOutHelper = Layer.named("InOutHelper")
     description:
       "Creates a blast effect using the color BLAST when a blast is requested. The effect is basically two humps moving out from the blast location. The size of the humps can be changed with WAVE_SIZE, note that smaller values makes the humps bigger. WAVE_MS determines how fast the waves travel. Smaller values makes the waves travel slower. Finally FADEOUT_MS determines how fast the humps fade back to the base color.",
     token: t.optional(t.string, ":layer:"),
-    template: "InOutHelperL<:extensionAmount:,:retractColor:,:allowDisable:>",
+    template: "InOutHelperL<:properties:>",
     properties: t.optional(t.array(InOutHelperProperty), [
       InOutHelperProperty.create({
         title: "Extension amount",
         token: ":extensionAmount:",
+        templateRequired: true,
         value: InOutFunc.create(),
       }),
       InOutHelperProperty.create({

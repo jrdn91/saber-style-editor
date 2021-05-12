@@ -50,11 +50,12 @@ const BaseLayer = Layer.named("BaseLayer")
     description:
       "This is the Base Layer for your Saber and usually holds the color for your Saber",
     token: t.optional(t.string, ":layer:"),
-    template: ":colorA:",
+    template: ":properties:",
     properties: t.optional(t.array(BaseLayerProperty), [
       BaseLayerProperty.create({
         title: "Base Color",
         token: ":colorA:",
+        templateRequired: true,
         value: Color.create({ value: "Blue" }),
       }),
     ]),

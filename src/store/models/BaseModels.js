@@ -1,4 +1,4 @@
-import { types as t } from "mobx-state-tree"
+import { getSnapshot, types as t } from "mobx-state-tree"
 import { v4 as uuidv4 } from "uuid"
 
 export const Property = t
@@ -7,8 +7,16 @@ export const Property = t
     type: "Property",
     title: t.optional(t.string, "Property"),
     token: t.optional(t.string, ":property:"),
+    templateRequired: false, // tracks if this property is required in the final template
   })
+  .volatile(() => ({
+    initialValue: undefined,
+  }))
   .actions((self) => ({
+    afterCreate() {
+      console.log("afterCreated")
+      self.initialValue = getSnapshot(self).value
+    },
     updateValue(newValue) {
       self.value = newValue
     },
@@ -20,12 +28,35 @@ export const Property = t
 export const Layer = t.model().actions((self) => ({
   getCode() {
     let templateString = self.template
-    self.properties.forEach((property) => {
-      templateString = templateString.replace(
-        property.token,
-        property.getCode()
-      )
-    })
+    let isChanged = false
+    const properties = [...self.properties]
+    const templifiedProps = properties
+      .reverse()
+      .map((property) => {
+        if (isChanged) {
+          // a property before this was changed so we need to templify all other properties
+          // templify(property)
+          return property.getCode()
+        } else {
+          if (property.initialValue.value !== property.value.value) {
+            // property values was updated
+            isChanged = true
+            // templify(property)
+            return property.getCode()
+          } else if (property.templateRequired) {
+            // templify(property)
+            return property.getCode()
+          } else {
+            // templateString = templateString.replace(property.token, "")
+            return ""
+          }
+        }
+      })
+      .filter((x) => x !== "")
+    templateString = templateString.replace(
+      ":properties:",
+      templifiedProps.reverse().join(",")
+    )
     return templateString
   },
 }))
@@ -49,11 +80,18 @@ export const Style = t.model().actions((self) => ({
   },
 }))
 
-export const Value = t.model().actions((self) => ({
-  getCode() {
-    return `${self.template.replace(self.token, self.displayValue)}`
-  },
-}))
+export const Value = t
+  .model()
+  .views((self) => ({
+    get templateValue() {
+      return self.displayValue
+    },
+  }))
+  .actions((self) => ({
+    getCode() {
+      return `${self.template.replace(self.token, self.templateValue)}`
+    },
+  }))
 
 export const Effect = t
   .model("Effect", {
@@ -65,6 +103,6 @@ export const Effect = t
   })
   .actions((self) => ({
     getCode() {
-      return self.value.getCode()
+      return `${self.template.replace(self.token, self.value)}`
     },
   }))

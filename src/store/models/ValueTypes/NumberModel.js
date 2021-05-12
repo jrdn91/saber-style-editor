@@ -16,8 +16,10 @@ const NumberModel = Value.named("Number")
   })
   .views((self) => ({
     get displayValue() {
-      console.log(self.value)
       return self.value
+    },
+    get templateValue() {
+      return `Int<${self.value}>`
     },
   }))
   .actions((self) => ({
