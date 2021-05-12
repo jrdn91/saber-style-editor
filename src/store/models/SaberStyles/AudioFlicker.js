@@ -20,7 +20,7 @@ const AudioFlicker = Style.named("AudioFlicker").props({
   ),
   template: t.optional(t.string, "AudioFlicker<:colorA:,:colorB:>"),
   displayValue: "AudioFlicker",
-  properties: t.optional(t.array(AudioFlickerProperty), [
+  properties: t.optional(t.array(AudioFlickerProperty), () => [
     AudioFlickerProperty.create({
       title: "Color A",
       token: ":colorA:",
