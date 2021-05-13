@@ -40,6 +40,17 @@ valueTypesReq.keys().forEach((x) => {
   ValueTypes[valueTypeName[1]] = valueTypesReq(x).default
 })
 
+export const Functions = {}
+const functionsReq = require.context(
+  "../store/models/Functions",
+  true,
+  /^(.*\.(js))[^.]*$/im
+)
+functionsReq.keys().forEach((x) => {
+  const valueTypeName = x.match(/\.\/([A-Za-z]+).js/)
+  Functions[valueTypeName[1]] = functionsReq(x).default
+})
+
 export const StylesContainer = ({ children }) => {
   const [store, setStore] = useState()
   const [expanded, setExpanded] = useState([-1])

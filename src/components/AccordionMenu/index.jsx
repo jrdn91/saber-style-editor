@@ -22,7 +22,7 @@ import InfoIcon from "@material-ui/icons/Info"
 import ColorDot from "components/Common/ColorDot"
 import { AppContext } from "contexts/App"
 import StylesContext from "contexts/Styles"
-import { LayerTypes, SaberStyles } from "contexts/Styles"
+import { Functions, LayerTypes, SaberStyles } from "contexts/Styles"
 import { isEmpty } from "lodash"
 import { observer } from "mobx-react"
 import { getType } from "mobx-state-tree"
@@ -180,6 +180,46 @@ const AccordionMenu = ({ children }) => {
                   <Tooltip
                     title={
                       SaberStyles[style].properties.description._defaultValue
+                    }
+                    placement="right"
+                  >
+                    <InfoIcon style={{ fontSize: "1rem" }} />
+                  </Tooltip>
+                </ListItemSecondaryAction>
+              </ListItem>
+            ))}
+          </List>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion
+        expanded={expanded.indexOf(1) > -1}
+        onChange={handleChange(1)}
+        square
+        elevation={0}
+      >
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="styles-content"
+          id="styles-header"
+        >
+          <Typography className={classes.heading}>Functions</Typography>
+        </AccordionSummary>
+        <AccordionDetails className={classes.accordionDetails}>
+          <List dense disablePadding className={classes.list}>
+            {Object.keys(Functions).map((style) => (
+              <ListItem
+                key={style}
+                button
+                disabled={store?.layers?.length === 0 || !selectedProperty}
+                onClick={handleAddStyle(style)}
+              >
+                <ListItemText primary={style} />
+                <ListItemSecondaryAction
+                  className={classes.listSecondaryAction}
+                >
+                  <Tooltip
+                    title={
+                      Functions[style].properties.description._defaultValue
                     }
                     placement="right"
                   >
