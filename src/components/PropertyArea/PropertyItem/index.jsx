@@ -12,6 +12,7 @@ import Rgb from "store/models/ValueTypes/Rgb"
 
 import Effect from "./Effect"
 import Function from "./Function"
+import Style from "./Style"
 import useStyles from "./styles"
 import Token from "./Token"
 import Value from "./Value"
@@ -21,6 +22,7 @@ const PropertyTypes = {
   Token,
   Function,
   Effect,
+  Style,
 }
 
 const PropertyItem = ({ property }) => {
