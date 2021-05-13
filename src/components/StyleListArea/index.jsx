@@ -91,11 +91,13 @@ const ListItems = observer(({ item, index = 1 }) => {
           secondary={item?.value?.title}
           onClick={handleSetSelectedLayer}
         />
-        <ListItemSecondaryAction>
-          <IconButton size="small" onClick={handleDeleteLayer(item)}>
-            <DeleteIcon style={{ fontSize: "1rem" }} />
-          </IconButton>
-        </ListItemSecondaryAction>
+        {item?.type === "Layer" && (
+          <ListItemSecondaryAction>
+            <IconButton size="small" onClick={handleDeleteLayer(item)}>
+              <DeleteIcon style={{ fontSize: "1rem" }} />
+            </IconButton>
+          </ListItemSecondaryAction>
+        )}
       </ListItem>
       {item.properties && item?.subLayers?.length > 0 && (
         <Collapse in={expanded.includes(item.id)} timeout="auto" unmountOnExit>
