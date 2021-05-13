@@ -22,7 +22,7 @@ const InOutFunc = Layer.named("InOutFunc")
       "A simple in our function to specify time miliseconds for effects",
     token: t.optional(t.string, ":layer:"),
     template: "InOutFuncX<:properties:>",
-    properties: t.optional(t.array(InOutFuncProperty), [
+    properties: t.optional(t.array(InOutFuncProperty), () => [
       InOutFuncProperty.create({
         title: "Out milliseconds",
         token: ":outMillis:",

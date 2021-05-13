@@ -22,7 +22,7 @@ const SmoothStep = Layer.named("SmoothStep")
       "A function to smoothly step between LED values positioned on the blade",
     token: t.optional(t.string, ":layer:"),
     template: "SmoothStep<:properties:>",
-    properties: t.optional(t.array(SmoothStepProperty), [
+    properties: t.optional(t.array(SmoothStepProperty), () => [
       SmoothStepProperty.create({
         title: "Position 0 = hilt, 32768 = tip",
         token: ":position:",

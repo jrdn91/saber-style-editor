@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from "uuid"
 import { Layer, Property } from "../BaseModels"
 import BlastEffect from "../Effects/Blast"
 
-export const SaberStyles = {}
+const SaberStyles = {}
 const saberStylesReq = require.context(
   "../SaberStyles",
   true,
@@ -19,7 +19,7 @@ saberStylesReq.keys().forEach((x) => {
   SaberStyles[saberStyleName[1]] = saberStylesReq(x).default
 })
 
-export const ValueTypes = {}
+const ValueTypes = {}
 const valueTypesReq = require.context(
   "../ValueTypes",
   true,
@@ -50,7 +50,7 @@ const Blast = Layer.named("Blast")
       "Creates a blast effect using the color BLAST when a blast is requested. The effect is basically two humps moving out from the blast location. The size of the humps can be changed with WAVE_SIZE, note that smaller values makes the humps bigger. WAVE_MS determines how fast the waves travel. Smaller values makes the waves travel slower. Finally FADEOUT_MS determines how fast the humps fade back to the base color.",
     token: t.optional(t.string, ":layer:"),
     template: "BlastL<:properties:>",
-    properties: t.optional(t.array(BlastProperty), [
+    properties: t.optional(t.array(BlastProperty), () => [
       BlastProperty.create({
         title: "Color A",
         token: ":colorA:",

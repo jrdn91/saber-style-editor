@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid"
 
 import { Layer, Property } from "../BaseModels"
 
-export const SaberStyles = {}
+const SaberStyles = {}
 const saberStylesReq = require.context(
   "../SaberStyles",
   true,
@@ -17,7 +17,7 @@ saberStylesReq.keys().forEach((x) => {
   SaberStyles[saberStyleName[1]] = saberStylesReq(x).default
 })
 
-export const ValueTypes = {}
+const ValueTypes = {}
 const valueTypesReq = require.context(
   "../ValueTypes",
   true,
@@ -51,7 +51,7 @@ const BaseLayer = Layer.named("BaseLayer")
       "This is the Base Layer for your Saber and usually holds the color for your Saber",
     token: t.optional(t.string, ":layer:"),
     template: ":properties:",
-    properties: t.optional(t.array(BaseLayerProperty), [
+    properties: t.optional(t.array(BaseLayerProperty), () => [
       BaseLayerProperty.create({
         title: "Base Color",
         token: ":colorA:",

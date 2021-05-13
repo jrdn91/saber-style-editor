@@ -9,7 +9,7 @@ import { Layer, Property } from "../BaseModels"
 import InOutFunc from "../Functions/InOutFunc"
 import Bool from "../ValueTypes/Bool"
 
-export const SaberStyles = {}
+const SaberStyles = {}
 const saberStylesReq = require.context(
   "../SaberStyles",
   true,
@@ -20,7 +20,7 @@ saberStylesReq.keys().forEach((x) => {
   SaberStyles[saberStyleName[1]] = saberStylesReq(x).default
 })
 
-export const Functions = {}
+const Functions = {}
 const functionsReq = require.context(
   "../Functions",
   true,
@@ -31,7 +31,7 @@ functionsReq.keys().forEach((x) => {
   Functions[funcName[1]] = functionsReq(x).default
 })
 
-export const ValueTypes = {}
+const ValueTypes = {}
 const valueTypesReq = require.context(
   "../ValueTypes",
   true,
@@ -63,7 +63,7 @@ const InOutHelper = Layer.named("InOutHelper")
       "Creates a blast effect using the color BLAST when a blast is requested. The effect is basically two humps moving out from the blast location. The size of the humps can be changed with WAVE_SIZE, note that smaller values makes the humps bigger. WAVE_MS determines how fast the waves travel. Smaller values makes the waves travel slower. Finally FADEOUT_MS determines how fast the humps fade back to the base color.",
     token: t.optional(t.string, ":layer:"),
     template: "InOutHelperL<:properties:>",
-    properties: t.optional(t.array(InOutHelperProperty), [
+    properties: t.optional(t.array(InOutHelperProperty), () => [
       InOutHelperProperty.create({
         title: "Extension amount",
         token: ":extensionAmount:",

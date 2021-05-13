@@ -25,7 +25,7 @@ const BrownNoiseFlicker = Style.named("BrownNoiseFlicker").props({
     t.string,
     "BrownNoiseFlicker<:colorA:,:colorB:,:grade:>"
   ),
-  properties: t.optional(t.array(BrownNoiseFlickerProperty), [
+  properties: t.optional(t.array(BrownNoiseFlickerProperty), () => [
     BrownNoiseFlickerProperty.create({
       title: "Color A",
       token: ":colorA:",

@@ -49,7 +49,7 @@ const Lockup = Layer.named("Lockup")
       "Shows LOCKUP if the lockup state is true, otherwise BASE. Also handles Drag, Melt and Lightning Block lockup types unless those are handled elsewhere in the same style.",
     token: t.optional(t.string, ":layer:"),
     template: "LockupL<:properties:>", // LockupL<LOCKUP, DRAG_COLOR, LOCKUP_SHAPE, DRAG_SHAPE, LB_SHAPE>
-    properties: t.optional(t.array(LockupProperty), [
+    properties: t.optional(t.array(LockupProperty), () => [
       LockupProperty.create({
         title: "Lockup color",
         token: ":lockupColor:",
