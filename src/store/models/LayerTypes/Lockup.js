@@ -6,6 +6,10 @@ import Rgb from "store/models/ValueTypes/Rgb"
 import { v4 as uuidv4 } from "uuid"
 
 import { Layer, Property } from "../BaseModels"
+import Bump from "../Functions/Bump"
+import LayerFunctions, {
+  LayerFunctionsProperty,
+} from "../Functions/LayerFunctions"
 import SmoothStep from "../Functions/SmoothStep"
 import AudioFlicker from "../SaberStyles/AudioFlicker"
 
@@ -88,6 +92,16 @@ const Lockup = Layer.named("Lockup")
         title: "Drag shape",
         token: ":dragShape:",
         value: dragShapeSmoothStep,
+      }),
+      LockupProperty.create({
+        title: "Lightning block shape",
+        token: ":lbShape:",
+        value: LayerFunctions.create({
+          properties: [
+            LayerFunctionsProperty.create({ value: Bump.create() }),
+            LayerFunctionsProperty.create({ value: Bump.create() }),
+          ],
+        }),
       }),
     ]),
   })
