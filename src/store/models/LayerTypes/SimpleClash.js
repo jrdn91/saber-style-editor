@@ -1,4 +1,5 @@
 import { types as t } from "mobx-state-tree"
+import { Effects, Functions } from "store/models"
 import Token from "store/models/Token"
 import Color from "store/models/ValueTypes/Color"
 import NumberModel from "store/models/ValueTypes/NumberModel"
@@ -8,24 +9,6 @@ import { v4 as uuidv4 } from "uuid"
 import { Layer, Property } from "../BaseModels"
 import ClashEffect from "../Effects/Clash"
 import SmoothStep from "../Functions/SmoothStep"
-
-const Effects = {}
-const effectsReq = require.context("../Effects", true, /^(.*\.(js))[^.]*$/im)
-effectsReq.keys().forEach((x) => {
-  const effectName = x.match(/\.\/([A-Za-z]+).js/)
-  Effects[effectName[1]] = effectsReq(x).default
-})
-
-const Functions = {}
-const functionsReq = require.context(
-  "../Functions",
-  true,
-  /^(.*\.(js))[^.]*$/im
-)
-functionsReq.keys().forEach((x) => {
-  const functionName = x.match(/\.\/([A-Za-z]+).js/)
-  Functions[functionName[1]] = functionsReq(x).default
-})
 
 const SimpleClashProperty = Property.named("SimpleClashProperty").props({
   value: t.union(

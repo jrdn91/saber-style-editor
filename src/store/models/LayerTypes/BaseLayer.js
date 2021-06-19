@@ -1,32 +1,11 @@
 import { types as t } from "mobx-state-tree"
+import { SaberStyles } from "store/models"
 import Token from "store/models/Token"
 import Color from "store/models/ValueTypes/Color"
 import Rgb from "store/models/ValueTypes/Rgb"
 import { v4 as uuidv4 } from "uuid"
 
 import { Layer, Property } from "../BaseModels"
-
-const SaberStyles = {}
-const saberStylesReq = require.context(
-  "../SaberStyles",
-  true,
-  /^(.*\.(js))[^.]*$/im
-)
-saberStylesReq.keys().forEach((x) => {
-  const saberStyleName = x.match(/\.\/([A-Za-z]+).js/)
-  SaberStyles[saberStyleName[1]] = saberStylesReq(x).default
-})
-
-const ValueTypes = {}
-const valueTypesReq = require.context(
-  "../ValueTypes",
-  true,
-  /^(.*\.(js))[^.]*$/im
-)
-valueTypesReq.keys().forEach((x) => {
-  const saberStyleName = x.match(/\.\/([A-Za-z]+).js/)
-  ValueTypes[saberStyleName[1]] = valueTypesReq(x).default
-})
 
 const BaseLayerProperty = t
   .compose(

@@ -1,4 +1,5 @@
 import { types as t } from "mobx-state-tree"
+import { Functions, SaberStyles } from "store/models"
 import Token from "store/models/Token"
 import Color from "store/models/ValueTypes/Color"
 import NumberModel from "store/models/ValueTypes/NumberModel"
@@ -12,39 +13,6 @@ import LayerFunctions, {
 } from "../Functions/LayerFunctions"
 import SmoothStep from "../Functions/SmoothStep"
 import AudioFlicker from "../SaberStyles/AudioFlicker"
-
-const SaberStyles = {}
-const saberStylesReq = require.context(
-  "../SaberStyles",
-  true,
-  /^(.*\.(js))[^.]*$/im
-)
-saberStylesReq.keys().forEach((x) => {
-  const saberStyleName = x.match(/\.\/([A-Za-z]+).js/)
-  SaberStyles[saberStyleName[1]] = saberStylesReq(x).default
-})
-
-const Functions = {}
-const functionStylesReq = require.context(
-  "../Functions",
-  true,
-  /^(.*\.(js))[^.]*$/im
-)
-functionStylesReq.keys().forEach((x) => {
-  const functionStyleName = x.match(/\.\/([A-Za-z]+).js/)
-  Functions[functionStyleName[1]] = functionStylesReq(x).default
-})
-
-const ValueTypes = {}
-const valueTypesReq = require.context(
-  "../ValueTypes",
-  true,
-  /^(.*\.(js))[^.]*$/im
-)
-valueTypesReq.keys().forEach((x) => {
-  const saberStyleName = x.match(/\.\/([A-Za-z]+).js/)
-  ValueTypes[saberStyleName[1]] = valueTypesReq(x).default
-})
 
 const LockupProperty = Property.named("LockupProperty").props({
   value: t.union(
