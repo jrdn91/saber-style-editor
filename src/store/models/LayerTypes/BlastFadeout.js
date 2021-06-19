@@ -20,15 +20,15 @@ const BlastProperty = Property.named("BlastProperty").props({
   ),
 })
 
-const Blast = Layer.named("Blast")
+const BlastFadeout = Layer.named("BlastFadeout")
   .props({
     id: t.optional(t.identifier, () => uuidv4()),
     type: "Layer",
-    title: t.optional(t.string, "Blast"),
+    title: t.optional(t.string, "BlastFadeout"),
     description:
-      "Creates a blast effect using the color BLAST when a blast is requested. The effect is basically two humps moving out from the blast location. The size of the humps can be changed with WAVE_SIZE, note that smaller values makes the humps bigger. WAVE_MS determines how fast the waves travel. Smaller values makes the waves travel slower. Finally FADEOUT_MS determines how fast the humps fade back to the base color.",
+      "Normally shows BASE, but swiches to BLAST when a blast is requested and then fades back to BASE. FADEOUT_MS specifies out many milliseconds the fade takes.",
     token: t.optional(t.string, ":layer:"),
-    template: "BlastL<:properties:>",
+    template: "BlastFadeoutL<:properties:>",
     properties: t.optional(t.array(BlastProperty), () => [
       BlastProperty.create({
         title: "Color A",
@@ -41,16 +41,7 @@ const Blast = Layer.named("Blast")
         token: ":fadeOutTime:",
         value: NumberModel.create({ value: 200 }),
       }),
-      BlastProperty.create({
-        title: "Wave Size",
-        token: ":waveSize:",
-        value: NumberModel.create({ value: 100 }),
-      }),
-      BlastProperty.create({
-        title: "Wave Speed",
-        token: ":waveSpeed:",
-        value: NumberModel.create({ value: 400 }),
-      }),
+
       BlastProperty.create({
         title: "Effect type",
         token: ":effectType:",
@@ -64,4 +55,4 @@ const Blast = Layer.named("Blast")
     },
   }))
 
-export default Blast
+export default BlastFadeout
