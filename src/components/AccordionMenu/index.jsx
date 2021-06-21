@@ -5,16 +5,19 @@ import {
   Box,
   Button,
   IconButton,
+  InputAdornment,
   List,
   ListItem,
   ListItemIcon,
   ListItemSecondaryAction,
   ListItemText,
   Popover,
+  TextField,
   Tooltip,
   Typography,
 } from "@material-ui/core"
 import AddCircleIcon from "@material-ui/icons/AddCircle"
+import CancelIcon from "@material-ui/icons/Cancel"
 import DeleteIcon from "@material-ui/icons/Delete"
 import EditIcon from "@material-ui/icons/Edit"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
@@ -23,10 +26,11 @@ import ColorDot from "components/Common/ColorDot"
 import { AppContext } from "contexts/App"
 import StylesContext from "contexts/Styles"
 import { Functions, LayerTypes, SaberStyles } from "contexts/Styles"
+import Fuse from "fuse.js"
 import { isEmpty } from "lodash"
 import { observer } from "mobx-react"
 import { getType } from "mobx-state-tree"
-import { useCallback, useContext, useState } from "react"
+import { useCallback, useContext, useMemo, useState } from "react"
 import Colors from "store/models/Colors"
 import BaseLayer from "store/models/LayerTypes/BaseLayer"
 
@@ -109,6 +113,24 @@ const AccordionMenu = ({ children }) => {
     [store?.layers]
   )
 
+  const [searchValue, setSearchValue] = useState("")
+  const searchLayersFuse = useMemo(() => {
+    return new Fuse(Object.values(LayerTypes), {
+      keys: ["name"],
+      threshold: 0.3,
+    })
+  }, [])
+  const searchedLayers = useMemo(() => {
+    if (!searchValue) return Object.values(LayerTypes)
+    return searchLayersFuse.search(searchValue).map((x) => x.item)
+  }, [searchLayersFuse, searchValue])
+
+  const handleSearch = (e) => {
+    setSearchValue(e.target.value)
+  }
+
+  console.log(searchedLayers)
+
   return (
     <Box className={classes.accordionMenu}>
       <Accordion
@@ -126,21 +148,43 @@ const AccordionMenu = ({ children }) => {
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetails}>
           <List dense disablePadding className={classes.list}>
-            {Object.keys(LayerTypes).map((type) => (
+            <ListItem style={{ marginBottom: 8 }}>
+              <TextField
+                value={searchValue}
+                onChange={handleSearch}
+                label="Search Layers"
+                fullWidth
+                variant="outlined"
+                margin="dense"
+                InputProps={{
+                  endAdornment: searchValue ? (
+                    <InputAdornment position="end">
+                      <IconButton
+                        size="small"
+                        onClick={() => setSearchValue("")}
+                      >
+                        <CancelIcon style={{ fontSize: "inherit" }} />
+                      </IconButton>
+                    </InputAdornment>
+                  ) : (
+                    <span />
+                  ),
+                }}
+              />
+            </ListItem>
+            {searchedLayers.map((type) => (
               <ListItem
-                key={type}
+                key={type.name}
                 button
-                disabled={getLayerDisabled(type)}
-                onClick={handleAddLayer(type)}
+                disabled={getLayerDisabled(type.name)}
+                onClick={handleAddLayer(type.name)}
               >
-                <ListItemText primary={type} />
+                <ListItemText primary={type.name} />
                 <ListItemSecondaryAction
                   className={classes.listSecondaryAction}
                 >
                   <Tooltip
-                    title={
-                      LayerTypes[type].properties.description._defaultValue
-                    }
+                    title={type.properties.description._defaultValue}
                     placement="right"
                   >
                     <InfoIcon style={{ fontSize: "1rem" }} />

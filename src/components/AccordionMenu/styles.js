@@ -13,7 +13,7 @@ const styles = makeStyles((theme) => ({
   },
   accordionDetails: {
     flexDirection: "column",
-    padding: theme.spacing(1, 0, 2),
+    padding: theme.spacing(0, 0, 2),
   },
   listSecondaryAction: {
     marginRight: theme.spacing(0.5),

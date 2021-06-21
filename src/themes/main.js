@@ -57,5 +57,10 @@ export default createMuiTheme({
         minWidth: 32,
       },
     },
+    MuiOutlinedInput: {
+      adornedEnd: {
+        paddingRight: 6,
+      },
+    },
   },
 })
